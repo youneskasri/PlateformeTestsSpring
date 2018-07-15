@@ -1,12 +1,14 @@
 package ma.map.tm.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,10 +25,11 @@ public class Project {
 	private String description;
 	private Date startDate;
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	private Plan plan;
-	
-	public Project(String description, Date startDate) {
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<Plan> testPlans = new ArrayList<>();
+					
+	public Project(String title, String description, Date startDate) {
+		setTitle(title);
 		setDescription(description);
 		setStartDate(startDate);
 	}
@@ -36,7 +39,11 @@ public class Project {
 		setStartDate(data.getStartDate());
 		setDescription(data.getDescription());
 	}
-
+	
+	public void addTestPlan(Plan newTestPlan) {
+		getTestPlans().add(newTestPlan);
+	}
+	
 	public static Project extract(ProjectForm data) {
 		Project p = new Project();
 		p.setData(data);

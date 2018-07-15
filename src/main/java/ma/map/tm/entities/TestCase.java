@@ -17,7 +17,7 @@ public class TestCase {
 
 	private @Id @GeneratedValue Long idTestCase;
 	private String objective;
-	private Date creationDate;
+	private Date dateOfCreation;
 	private TestType type;
 }
 
