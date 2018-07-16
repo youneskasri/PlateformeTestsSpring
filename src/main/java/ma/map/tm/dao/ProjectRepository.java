@@ -9,4 +9,6 @@ import ma.map.tm.entities.Project;
 //@CrossOrigin(allowCredentials = "false")
 public interface ProjectRepository extends CrudRepository<Project, Long> {
 
+	Project findByTitle(String string);
+
 }
