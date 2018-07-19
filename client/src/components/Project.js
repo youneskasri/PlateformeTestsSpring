@@ -1,17 +1,29 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Project = (props) => (
-      <tr>
-      	<td>{props.project.idProject}</td>
-        <td>{props.project.title}</td>
-        <td>{props.project.description}</td>
-        <td>{props.project.startDate}</td>
-        <td>
-        	<a href="#" onClick={props.onShow}>Show</a>
-          -
-          <a href="#" onClick={props.onDelete}>Delete</a>
-        </td>
-      </tr>
-  );
+  <div className="card mb-3">
+    <div className="card-header">
+    	<div className="row">
+    		<div className="col-11">{props.project.title} by {props.project.author} at {props.project.startDate.toString()}</div>
+    		{
+    			props.returnButton ? 
+    			<div className="col-1">
+    				<Link className="btn btn-light text-info float-right" to="/projects">
+    					<i className="fas fa-times"></i>
+    				</Link>
+    			</div> 
+    			: ''
+    		}
+    	</div>
+    </div>
+    <div className="card-body">
+      {props.project.description}
+      {
+      	props.showLink ? <Link className="float-right" to={'/projects/'+props.project.idProject}> Show</Link> : ''
+      }
+    </div>
+  </div>
+); 
 
 export default Project;

@@ -22,8 +22,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-		Project p1 = new Project("Project A", new Date());
-		p1.setPlan(new Plan("Plan 1"));
+		Project p1 = new Project("Pr A","Project A", new Date());
 		this.repository.save(p1);
 	}
 }
