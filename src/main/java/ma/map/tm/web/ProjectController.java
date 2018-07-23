@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ma.map.tm.business.IProjectService;
@@ -38,9 +40,12 @@ public class ProjectController {
 	public ProjectDTO show(@PathVariable Long id) {
 		return projectService.retrieveProjectById(id);
 	}
-
-	@PatchMapping("/{id}")
+	
+	/* Patch => CORS Problem :( */
+	@PostMapping("/{id}")
 	public ProjectDTO update(@PathVariable Long id, @RequestBody ProjectForm data) {
+		System.out.println(id);
+		System.out.println(data);
 		return projectService.updateProject(id, data);
 	}
 	

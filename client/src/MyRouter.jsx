@@ -12,6 +12,7 @@ import Users from "./pages/Users";
 import Projects from "./pages/Projects";
 import ShowProject from "./pages/ShowProject";
 import NewProject from "./pages/NewProject";
+import EditProject from "./pages/EditProject";
 
 import ShowPlan from "./pages/ShowPlan";
 
@@ -42,6 +43,8 @@ const MyRouter = (props) => {
 
 					{/* Be careful, These Are Using Nested Routes */}
 					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/cases' component={ShowPlan} />
+
+					<Route path='/projects/:idProject(\d+)/edit' component={EditProject} />
 					<Route path='/projects/:idProject(\d+)' component={ShowProject} />
 				</Switch>
 			</div>

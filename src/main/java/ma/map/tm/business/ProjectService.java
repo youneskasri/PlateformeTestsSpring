@@ -57,6 +57,7 @@ public class ProjectService implements IProjectService{
 		Optional<Project> opt = projectRepository.findById(id);
 		Project project = opt.get();
 		project.setData(data);
+		projectRepository.save(project);
 		return ProjectDTO.convert(project);
 	}
 

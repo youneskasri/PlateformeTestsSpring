@@ -5,7 +5,10 @@ const Project = (props) => (
   <div className="card mb-3">
     <div className="card-header">
     	<div className="row">
-    		<div className="col-11">{props.project.title} by {props.project.authorFullName} from 
+    		<div className="col-11">
+          <Link className="text-info" to={'/projects/'+props.project.idProject}>
+            {props.project.title}
+          </Link> by {props.project.authorFullName} from 
           <span className="text-info"> {props.project.startDate} </span>
           to <span className="text-info">{props.project.endDate}</span>
         </div>

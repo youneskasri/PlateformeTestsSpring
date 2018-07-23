@@ -7,19 +7,43 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 
 
-export default class NewProject  extends React.Component {
+export default class EditProject  extends React.Component {
 	state = {
-		startDate: moment(),
-		endDate: moment(),
-		redirection: null
+		project: {
+			startDate: moment(),
+			endDate: moment()
+		}
 	}	
 
+	componentDidMount() {
+
+		Axios.get('http://localhost:8080/projects/'+this.props.match.params.idProject)
+		.then(res => res.data)
+		.then(project => {
+			this.setState({ project });
+		})
+		.catch(console.log);
+	}
+
 	handleStartDateChange = (startDate) => {
-		this.setState({ startDate });
+		let project = this.state.project;
+		project.startDate = startDate;
+		this.setState({ project });
 	}
 
 	handleEndDateChange = (endDate) => {
-		this.setState({ endDate });
+		let project = this.state.project;
+		project.endDate = endDate;
+		this.setState({ project });
+	}
+
+	handleDescriptionChange = () => {
+		let description = this.refs.description.value;
+		console.log(description);
+		let project = this.state.project;
+		project.description = description;
+		console.log(project);
+		this.setState({ project });
 	}
 
 	handleSubmit = (evt) => {
@@ -27,21 +51,29 @@ export default class NewProject  extends React.Component {
 
 		let title = this.refs.title.value;
 		let description = this.refs.description.value;
-		let startDate = this.state.startDate;
-		let endDate = this.state.endDate;
+		
+		let { idProject, startDate, endDate } = this.state.project;
 
-		Axios.post('http://localhost:8080/projects', { title, description, startDate, endDate })
+		let url = 'http://localhost:8080/projects/'+idProject;
+
+		console.log("sending request to ", url, { title, description, startDate, endDate });
+
+		Axios.post(url, { title, description, startDate, endDate })
 		.then(res => res.data)
 		.then(project => {
+			console.log(project);
+
 			let redirection = (
 				<Redirect from={`this.props.match.path`} to={`/projects/${project.idProject}`} />
 			);
-			this.setState({ redirection });
+			this.setState({project, redirection});
 		})
 		.catch(console.log);
 	}
 
 	render(){
+
+		let { startDate, endDate, title, description } = this.state.project;
 		return (
 			<div className="container-fluid pt-4">
 				<div className="row mt-3">
@@ -61,16 +93,16 @@ export default class NewProject  extends React.Component {
 							<form className="container" onSubmit={this.handleSubmit}>
 								{ this.state.redirection }
 								<div className="pb-3 pt-4">
-									<input required type="text" className="form-control" placeholder="Project title" ref="title" />
+									<input required type="text" className="form-control" defaultValue={title} ref="title" />
 								</div>
 								<div className="pb-3">
-									<textarea required className="form-control" cols="30" rows="5" ref="description" placeholder="Project Description"></textarea>
+									<textarea required className="form-control" cols="30" rows="5" ref="description" placeholder="Project Description" onChange={this.handleDescriptionChange} value={description}></textarea>
 								</div>
 								<div className="pb-3 input-group">
 									<label className="form-control bg-light"> Start Date </label>
 									<DatePicker
 										className="form-control"
-								        selected={this.state.startDate}
+								        selected={startDate? moment(startDate) : moment(0)}
 								        onChange={this.handleStartDateChange}
 								    />
 								</div>
@@ -78,7 +110,7 @@ export default class NewProject  extends React.Component {
 									<label className="form-control bg-light"> End Date </label>
 									<DatePicker
 										className="form-control"
-								        selected={this.state.endDate}
+								        selected={endDate? moment(endDate) : moment(0)}
 								        onChange={this.handleEndDateChange}
 								    />
 								</div>							

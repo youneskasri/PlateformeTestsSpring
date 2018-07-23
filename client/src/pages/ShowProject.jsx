@@ -5,6 +5,8 @@ import Project from "../components/Project";
 import Plan from "../components/Plan";
 import NewPlan from "../components/NewPlan";
 
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 function getTestPlans(){
 	return [
@@ -19,7 +21,7 @@ function getTestPlans(){
 
 function retrieveProjectById(id) {
   return  Axios.get('http://localhost:8080/projects/'+id)
-		.then(response => response.data)
+		.then(response => response.data);
 }
 
 function deleteProjectById(id) {
@@ -47,6 +49,29 @@ export default class ShowProject extends React.Component {
 
 	handleDelete = (evt) => {
 		evt.preventDefault();
+		confirmAlert({
+	      title: 'Confirmer la suppression',
+	      message: 'Are you sure to do this.',
+	        customUI: ({ onClose }) => {
+			    return (
+			      <div className="bg-light p-4 pt-1 border rounded">
+			        <h1 className="text-info">Are you sure?</h1>
+			        <hr/>
+			        <p>You want to delete this file?</p>
+			        <div className="btn-group ml-5 pr-3">
+				        <button className="btn btn-info" onClick={onClose}>No, don't</button>
+				        <button className="btn btn-danger" onClick={() => {
+				            this.destroyProject()
+				            onClose()
+				        }}>Yes, Delete it!</button>
+			        </div>
+			      </div>
+			    )
+			  }
+	    });
+	}
+
+	destroyProject = () => {
 		deleteProjectById(this.state.project.idProject)
 			.then(bool => console.log('deleted ?', bool))
 			.then(()=> {
@@ -85,7 +110,7 @@ export default class ShowProject extends React.Component {
 						<h1 className="text-center text-info">Project</h1>
 						<h2 className="text-center text-info">N° {project.idProject}</h2>
 						<div className="text-center">
-							<Link to="/" className="text-secondary">Update</Link>
+							<Link to={`/projects/${project.idProject}/edit`} className="text-secondary">Update</Link>
 							<Link to="/" onClick={this.handleDelete} className="ml-1 text-danger">Delete</Link>
 						</div>
 					</div>
