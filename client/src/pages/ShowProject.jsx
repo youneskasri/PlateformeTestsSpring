@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
-import { Link, Switch, Route } from "react-router-dom";
+import Axios from 'axios';
+import { Link, Switch, Route, Redirect } from "react-router-dom";
 import Project from "../components/Project";
 import Plan from "../components/Plan";
 import NewPlan from "../components/NewPlan";
@@ -18,8 +18,13 @@ function getTestPlans(){
 
 
 function retrieveProjectById(id) {
-  return  axios.get('http://localhost:8080/projects/'+id)
+  return  Axios.get('http://localhost:8080/projects/'+id)
 		.then(response => response.data)
+}
+
+function deleteProjectById(id) {
+	return  Axios.delete('http://localhost:8080/projects/'+id)
+		.then(response => response.data);
 }
 
 
@@ -28,7 +33,9 @@ export default class ShowProject extends React.Component {
 	state = {
 		project: {
 			startDate: ''
-		}
+		},
+
+		redirection: null
 	}
 
 	componentDidMount(){
@@ -36,6 +43,20 @@ export default class ShowProject extends React.Component {
 			.then(project => { console.log(project); return project; })
 			.then(project => this.setState({ project }) );
 		console.log(this.state.project);
+	}
+
+	handleDelete = (evt) => {
+		evt.preventDefault();
+		deleteProjectById(this.state.project.idProject)
+			.then(bool => console.log('deleted ?', bool))
+			.then(()=> {
+				let redirection = (
+					<Redirect from={`this.props.match.path`} 
+					to="/projects" />
+				);
+				this.setState({ redirection });
+			})
+			.catch(console.log);
 	}
 
 	render(){
@@ -58,13 +79,14 @@ export default class ShowProject extends React.Component {
 		console.log("Rendering ShowProject");
 		return (
 			<div className="container mt-5">
+				{ this.state.redirection /* if necessary */}
 				<div className="row">
 					<div className="col-2">
 						<h1 className="text-center text-info">Project</h1>
 						<h2 className="text-center text-info">N° {project.idProject}</h2>
 						<div className="text-center">
 							<Link to="/" className="text-secondary">Update</Link>
-							<Link to="/" className="ml-1 text-danger">Delete</Link>
+							<Link to="/" onClick={this.handleDelete} className="ml-1 text-danger">Delete</Link>
 						</div>
 					</div>
 					<div className="col-10">
