@@ -1,23 +1,16 @@
 import React from 'react';
+import axios from 'axios';
 import { Link } from   'react-router-dom';
 import Project from "../components/Project";
 import ProjectList from "../components/ProjectList";
 
-function getDataFromServer() {
+function retrieveAllProjects() {
 
-	console.log("J'ai lancé une requete !!");
-
-	return [
-			{idProject: 1, title: 'Project 001', description:'Lorem Ipsum 00 00 00 00', author: 'Younes Kasri', startDate: new Date()},
-			{idProject: 2, title: 'Project 002', description:'Lorem Ipsum 00 00 00 00', author: 'Younes Kasri', startDate: new Date()},
-			{idProject: 3, title: 'Project 003', description:'Lorem Ipsum 00 00 00 00', author: 'Younes Kasri', startDate: new Date()},
-			{idProject: 4, title: 'Project 004', description:'Lorem Ipsum 00 00 00 00', author: 'Younes Kasri', startDate: new Date()}
-		];
+  return  axios.get('http://localhost:8080/projects')
+		.then(response => response.data)
 }
 
-
-
-export default class Projects extends React.Component{
+export default class Projects extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -29,19 +22,19 @@ export default class Projects extends React.Component{
 
 
 	componentDidMount(){
-		let projects = getDataFromServer();
-		this.setState({ projects: projects });		
+		retrieveAllProjects()
+			.then(projects => this.setState({ projects }) );		
 	}
+
 
 	filterByKeywords = (event) => {
 
 		let keywords = event.target.value;
 
-		let projects = getDataFromServer();
-		let filteredProjects = projects.filter(p => p.title.includes(keywords));
-		console.log(filteredProjects);
-
-		this.setState({ projects: filteredProjects });
+		retrieveAllProjects()
+			.then(projects => projects.filter(p => p.title.includes(keywords)) )
+			.then(filteredProjects => this.setState({ projects: filteredProjects }) )
+	  		.catch(console.log);
 	}
 
 	render() {

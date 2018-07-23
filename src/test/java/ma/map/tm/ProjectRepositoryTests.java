@@ -34,7 +34,7 @@ public class ProjectRepositoryTests {
 	
 	@Test
 	public void insertProject() {
-		Project p1 = new Project("Pr A","Project A", new Date());
+		Project p1 = new Project("Pr A","Project A", new Date(), new Date());
 		p1 = this.projectRepository.save(p1);
 		assertThat(p1.getDescription()).isEqualTo("Project A");
 	}
@@ -42,7 +42,7 @@ public class ProjectRepositoryTests {
 	@Test 
 	public void retrieveProjectByTitle() {
 		String title = "Project Title";
-		Project p = projectRepository.save(new Project(title, "Project B", new Date()));
+		Project p = projectRepository.save(new Project(title, "Project B", new Date(), new Date()));
 		p = projectRepository.findByTitle(title);
 		assertThat(p.getTitle()).isEqualTo(title);
 		assertThat(p.getIdProject()).isNotNull();
@@ -51,11 +51,11 @@ public class ProjectRepositoryTests {
 	@Test
 	public void addTestPlanToProject() {
 		// Given project
-		Project p = projectRepository.save(new Project("001", "Project 001", new Date()));
+		Project p = projectRepository.save(new Project("001", "Project 001", new Date(), new Date()));
 		
 		// add Test Plan and Save
 		String planDescription = "Plan de test 1";
-		Plan newTestPlan = new Plan(planDescription);
+		Plan newTestPlan = new Plan("", planDescription);
 		p.addTestPlan(newTestPlan);
 		p = projectRepository.save(p);
 		
@@ -68,8 +68,8 @@ public class ProjectRepositoryTests {
 	public void deleteProject_withTestPlan() {
 		
 		// given Project with Test Plan
-		Project p =new Project("001", "Project 001", new Date());
-		Plan testPlan = new Plan("Test Plan 001");
+		Project p =new Project("001", "Project 001", new Date(), new Date());
+		Plan testPlan = new Plan("", "Test Plan 001");
 		p.addTestPlan(testPlan);
 		p = projectRepository.save(p);
 		

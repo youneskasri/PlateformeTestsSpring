@@ -6,6 +6,9 @@
 ** Run JUNIT 5 with JDK 9 ** JAB dependency has been removed from Java 9
 you need to add it in pom.xml to avoid NotDefClass exception.
 
+** Autocompletion ** En general on relance la request chaque 3 caractères.
 
-** Question ** One Repository with Cascade OR Multiple Repositories ??
-
+** Question ** 
+	- One Repository with Cascade OR Multiple Repositories ??
+	- OneToMany vs ManyToOne
+	- Unidirectionnal vs Bidirectionnal association ?

@@ -5,7 +5,10 @@ const Project = (props) => (
   <div className="card mb-3">
     <div className="card-header">
     	<div className="row">
-    		<div className="col-11">{props.project.title} by {props.project.author} at {props.project.startDate.toString()}</div>
+    		<div className="col-11">{props.project.title} by {props.project.authorFullName} from 
+          <span className="text-info"> {props.project.startDate} </span>
+          to <span className="text-info">{props.project.endDate}</span>
+        </div>
     		{
     			props.returnButton ? 
     			<div className="col-1">

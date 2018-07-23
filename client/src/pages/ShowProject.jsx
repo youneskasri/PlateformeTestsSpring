@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Link, Switch, Route } from "react-router-dom";
 import Project from "../components/Project";
 import Plan from "../components/Plan";
@@ -14,59 +15,80 @@ function getTestPlans(){
 	];
 }
 
-const ShowProject = (props) => {
 
-	let project = {
-		title: 'My Title',
-		author: 'My Author',
-		startDate: new Date(),
-		description: 'Description',
-		idProject: props.match.params.idProject
-	};
 
-	let testPlans = getTestPlans().map(plan => (
-		<li key={plan.idPlan} className="list-group-item">{/*<Link to={`${props.match.url}/plans/1`}>{plan}</Link>*/}
-			<Link className="text-info" to={`/projects/${project.idProject}/plans/${plan.idPlan}`}>{ plan.title }</Link>
-		</li>
-	));
+function retrieveProjectById(id) {
+  return  axios.get('http://localhost:8080/projects/'+id)
+		.then(response => response.data)
+}
 
-	let dynamicCanvas = (
-		<Switch>
-			<Route exact path="/projects/:idProject/plans/new" component={NewPlan} />
-			<Route exact path="/projects/:idProject/plans/:idPlan(\d+)" component={Plan} />
-		</Switch>
-	);
 
-	console.log("Rendering ShowProject");
-	return (
-		<div className="container mt-5">
-			<div className="row">
-				<div className="col-2">
-					<h1 className="text-center text-info">Project</h1>
-					<h2 className="text-center text-info">N° {project.idProject}</h2>
+export default class ShowProject extends React.Component {
+
+	state = {
+		project: {
+			startDate: ''
+		}
+	}
+
+	componentDidMount(){
+		retrieveProjectById(this.props.match.params.idProject)
+			.then(project => { console.log(project); return project; })
+			.then(project => this.setState({ project }) );
+		console.log(this.state.project);
+	}
+
+	render(){
+
+		let project = this.state.project;
+
+		let testPlans = getTestPlans().map(plan => (
+			<li key={plan.idPlan} className="list-group-item">{/*<Link to={`${this.props.match.url}/plans/1`}>{plan}</Link>*/}
+				<Link className="text-info" to={`/projects/${project.idProject}/plans/${plan.idPlan}`}>{ plan.title }</Link>
+			</li>
+		));
+
+		let dynamicCanvas = (
+			<Switch>
+				<Route exact path="/projects/:idProject/plans/new" component={NewPlan} />
+				<Route exact path="/projects/:idProject/plans/:idPlan(\d+)" component={Plan} />
+			</Switch>
+		);
+
+		console.log("Rendering ShowProject");
+		return (
+			<div className="container mt-5">
+				<div className="row">
+					<div className="col-2">
+						<h1 className="text-center text-info">Project</h1>
+						<h2 className="text-center text-info">N° {project.idProject}</h2>
+						<div className="text-center">
+							<Link to="/" className="text-secondary">Update</Link>
+							<Link to="/" className="ml-1 text-danger">Delete</Link>
+						</div>
+					</div>
+					<div className="col-10">
+						<Project project={project} returnButton />
+					</div>
 				</div>
-				<div className="col-10">
-					<Project project={project} returnButton />
+				<div className="row">
+					<div className="col-md-6">
+						<h4 className="card-header bg-lightBlue">
+							Test Plans
+							<Link to={`/projects/${project.idProject}/plans/new`} className="text-info float-right">
+								<small><i className="fa fa-plus"></i> Add a test plan</small>
+							</Link>
+						</h4>
+						<ul className="list-group list-group-flush">
+							{ testPlans }
+						</ul>					
+					</div>
+					<div className="col-md-6">
+						{dynamicCanvas}
+					</div>
 				</div>
 			</div>
-			<div className="row">
-				<div className="col-md-6">
-					<h4 className="card-header bg-lightBlue">
-						Test Plans
-						<Link to={`/projects/${project.idProject}/plans/new`} className="text-info float-right">
-							<small><i className="fa fa-plus"></i> Add a test plan</small>
-						</Link>
-					</h4>
-					<ul className="list-group list-group-flush">
-						{ testPlans }
-					</ul>					
-				</div>
-				<div className="col-md-6">
-					{dynamicCanvas}
-				</div>
-			</div>
-		</div>
-	);
+		);
+	}
+	
 };
-
-export default ShowProject;

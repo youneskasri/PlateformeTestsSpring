@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import ma.map.tm.dao.ProjectRepository;
@@ -12,6 +13,7 @@ import ma.map.tm.entities.Project;
 import ma.map.tm.entities.ProjectDTO;
 import ma.map.tm.web.ProjectForm;
 
+@Primary
 @Service
 public class ProjectService implements IProjectService{
 
@@ -30,7 +32,7 @@ public class ProjectService implements IProjectService{
 
 	@Override
 	public ProjectDTO createProject(ProjectForm data) {
-		Project project = Project.extract(data);
+		Project project = ProjectForm.extract(data);
 		project = projectRepository.save(project);
 		return ProjectDTO.convert(project);
 	}

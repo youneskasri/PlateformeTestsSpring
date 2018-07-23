@@ -43,8 +43,8 @@ public class ProjectControllerTests {
     public void whenGetProjects_thenReturnJsonArray() throws Exception {
         
     	// given 2 projects
-        Project p0 = new Project("P0", "Desc0", new Date()),
-        		p1 = new Project("P1", "Desc1", new Date());
+        Project p0 = new Project("P0", "Desc0", new Date(), new Date()),
+        		p1 = new Project("P1", "Desc1", new Date(), new Date());
         
         // mock Service
         List<ProjectDTO> allProjects = Arrays
@@ -68,7 +68,7 @@ public class ProjectControllerTests {
     	
     	// given 1 project
     	int idProject = 1000;
-        Project p0 = new Project("P0", "Desc0", new Date());
+        Project p0 = new Project("P0", "Desc0", new Date(), new Date());
         p0.setIdProject((long)idProject);
         
         // mock Service
