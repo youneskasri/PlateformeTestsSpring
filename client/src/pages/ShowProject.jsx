@@ -1,6 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
-import { Link, Switch, Route, Redirect } from "react-router-dom";
+import { Link, Switch, Route, Redirect, BrowserRouter as Router } from "react-router-dom";
 import Project from "../components/Project";
 import Plan from "../components/Plan";
 import NewPlan from "../components/NewPlan";
@@ -8,15 +8,16 @@ import NewPlan from "../components/NewPlan";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
-function getTestPlans(){
-	return [
-		{idPlan: 1, title: 'Test Plan 001', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 001 ' },
-		{idPlan: 2, title: 'Test Plan 002', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 002 ' },
-		{idPlan: 3, title: 'Test Plan 003', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 003 ' },
-		{idPlan: 4, title: 'Test Plan 004', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 004 ' }
-	];
+function retrieveTestPlansByProjectId(idProject){
+	return Axios.get(`http://localhost:8080/projects/${idProject}/plans`)
+		.then(response => response.data);
 }
 
+function retrieveTestPlan(idProject, idPlan){
+	console.log("Requesst !!")
+	return Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}`)
+		.then(response => response.data);
+}
 
 
 function retrieveProjectById(id) {
@@ -30,21 +31,40 @@ function deleteProjectById(id) {
 }
 
 
-export default class ShowProject extends React.Component {
+class ShowProject extends React.Component {
 
 	state = {
 		project: {
 			startDate: ''
 		},
+		testPlans: [],
+		redirection: null,
 
-		redirection: null
+		selectedPlanId: null
+	}
+
+	componentWillMount(){
+		let { idProject, idPlan } = this.props.match.params;
+		console.log(idPlan);
+		this.setState({ selectedPlanId: idPlan });
 	}
 
 	componentDidMount(){
-		retrieveProjectById(this.props.match.params.idProject)
+		let { idProject, idPlan } = this.props.match.params;
+
+ 		retrieveProjectById(idProject)
 			.then(project => { console.log(project); return project; })
 			.then(project => this.setState({ project }) );
-		console.log(this.state.project);
+		
+		retrieveTestPlansByProjectId(idProject)
+			.then(testPlans => { console.log(testPlans); return testPlans; })
+			.then(testPlans => this.setState({ testPlans }));
+
+		if (idPlan){
+			this.setState({ selectedPlanId: idPlan });
+		}
+
+		console.log(this.state.project);	
 	}
 
 	handleDelete = (evt) => {
@@ -85,21 +105,26 @@ export default class ShowProject extends React.Component {
 	}
 
 	render(){
+		console.log("selectedPlanId", this.state.selectedPlanId);
 
 		let project = this.state.project;
 
-		let testPlans = getTestPlans().map(plan => (
+		let testPlans = this.state.testPlans.map(plan => (
 			<li key={plan.idPlan} className="list-group-item">{/*<Link to={`${this.props.match.url}/plans/1`}>{plan}</Link>*/}
-				<Link className="text-info" to={`/projects/${project.idProject}/plans/${plan.idPlan}`}>{ plan.title }</Link>
+				<Link className="text-info" 
+					to={`/projects/${project.idProject}/plans/${plan.idPlan}/cases`}>{ plan['title'] }</Link>
 			</li>
 		));
+
+		
+
 
 		let dynamicCanvas = (
 			<Switch>
 				<Route exact path="/projects/:idProject/plans/new" component={NewPlan} />
-				<Route exact path="/projects/:idProject/plans/:idPlan(\d+)" component={Plan} />
+				<Route exact path="/projects/:idProject/plans/:idPlan(\d+)" component={this.state.Plan} />
 			</Switch>
-		);
+		); 
 
 		console.log("Rendering ShowProject");
 		return (
@@ -139,3 +164,6 @@ export default class ShowProject extends React.Component {
 	}
 	
 };
+
+
+export default ShowProject;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {
 	BrowserRouter as Router,
-	Route, Link, Switch
+	Route, Switch
 } from "react-router-dom";
 
 import MyNavbar from "./components/MyNavbar";
@@ -15,6 +15,7 @@ import NewProject from "./pages/NewProject";
 import EditProject from "./pages/EditProject";
 
 import ShowPlan from "./pages/ShowPlan";
+import EditPlan from "./pages/EditPlan";
 
 const MyRouter = (props) => {
 
@@ -42,8 +43,8 @@ const MyRouter = (props) => {
 					<Route exact path='/projects/new' component={NewProject} />
 
 					{/* Be careful, These Are Using Nested Routes */}
+					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/edit' component={EditPlan} />	
 					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/cases' component={ShowPlan} />
-
 					<Route path='/projects/:idProject(\d+)/edit' component={EditProject} />
 					<Route path='/projects/:idProject(\d+)' component={ShowProject} />
 				</Switch>

@@ -21,7 +21,7 @@ const Case = (props) => {
 
 	return (
 		<div className="card">
-			<h5 className="card-header">Test Case : 001
+			<h5 className="card-header">Test Case : {idCase}
 				<Link className="float-right text-info" to={returnLink} >
 					<i className="fas fa-times"></i>
 				</Link>

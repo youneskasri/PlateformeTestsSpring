@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import axios from "axios";
+/*import React, { Component } from 'react';
+import axios from "axios";*/
 
 /*import ProjectList from "./components/ProjectList";
 import NewProjectForm from "./components/NewProjectForm";

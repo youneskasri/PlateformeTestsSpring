@@ -1,27 +1,34 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import Axios from "axios";
 
-function getTestPlans(){
-	return [
-		{idPlan: 1, title: 'Test Plan 001', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 001 ' },
-		{idPlan: 2, title: 'Test Plan 002', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 002 ' },
-		{idPlan: 3, title: 'Test Plan 003', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 003 ' },
-		{idPlan: 4, title: 'Test Plan 004', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 004 ' }
-	];
+function retrieveTestPlan(idProject, idPlan){
+	console.log("Requesst !!")
+	return Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}`)
+		.then(response => response.data);
 }
 
-const Plan = (props) => {
-	
-	let { idProject , idPlan } = props.match.params;
+class Plan extends React.Component {
 
-	let url = props.match.url;
+	constructor(props) {
+		super(props)
+	}
 
-	let returnLink = url.includes('cases') ? url.replace('/cases', '') : `/projects/${idProject}`; 
-	
-	let plan = getTestPlans()
-		.filter(p => p.idPlan == idPlan)[0];
+	render() {
+		 
+		let { idProject, idPlan   } = this.props.match.params;
+ 		
+ 		let { plan } = this.props;
 
-	let links = props.hideLinks ? '' : (
+ 		if (!plan) return <div>No Plan Displayed</div>;
+
+		let { url } = this.props.match;
+		/*
+			A Changer Plus Tard :/
+		*/
+		let returnLink = url.includes('cases') ? url.replace('/cases', '') : `/projects/${idProject}`; 
+ 
+		let links = this.props.hideLinks ? '' : (
 					<div>
 						<div><Link className="text-info" to={`/projects/${idProject}/plans/${idPlan}/cases`}>
 							10 Test Scenarios
@@ -30,29 +37,34 @@ const Plan = (props) => {
 								Historique des executions
 						</Link></div>
 					</div> );
-
-	let showMore = props.hideLinks ? '' : (
-				<div className="card-footer">
-					<Link className="float-right text-info" to={`/projects/${idProject}/plans/${idPlan}/cases`}>
-						Show more
+ 
+		let showMore = this.props.hideLinks ? '' : (
+					<div className="card-footer">
+						<Link className="float-right text-info" to={`/projects/${idProject}/plans/${idPlan}/cases`}>
+							Show more
+						</Link>
+					</div> );
+ 
+		return  (
+			<div className="card">
+				<h5 className="card-header"><small className="text-info font-weight-bold pr-2">Test Plan Title </small> {plan.title }
+					<Link className="float-right text-info" to={returnLink} >
+						<i className="fas fa-times"></i>
 					</Link>
-				</div> );
-
-	return (
-		<div className="card">
-			<h5 className="card-header">Title : {plan.title}
-				<Link className="float-right text-info" to={returnLink} >
-					<i className="fas fa-times"></i>
-				</Link>
-			</h5>
-			<div className="card-body">				
-				<h4>Description </h4>
-				<p>{plan.description}</p> 
-				{ links }
+				</h5>
+				<div className="card-body">	
+					<p>
+						<span className="font-weight-bold text-info pr-2">Test Plan Description </span>		
+						{plan.description}
+					</p> 
+					{ links }
+				</div>
+				{ showMore }
 			</div>
-			{ showMore }
-		</div>
-	);
+		);
+	}
+
 }
 
-export default Plan;
+export default Plan; // withRouter(Plan);
+

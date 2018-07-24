@@ -27,7 +27,7 @@ public class Plan {
 	private Project project;
 	
 	@OneToMany
-	private List<TestCase> testCases = new ArrayList<>();
+	private List<Scenario> scenarios = new ArrayList<>();
 	
 	public Plan(String title, String description) {
 		setTitle(title);
@@ -36,6 +36,6 @@ public class Plan {
 
 	public void setData(PlanForm data) {
 		setTitle(data.getTitle());
-		setDescription(description);
+		setDescription(data.getDescription());
 	}
 }

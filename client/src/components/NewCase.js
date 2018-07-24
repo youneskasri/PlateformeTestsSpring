@@ -14,13 +14,13 @@ export default class NewCase extends React.Component {
 	render(){
 
 		const AutomatedTestData = (props) => (
-			<form class="form-inline mt-1">
+			<div className="form-inline mt-1">
 			  <select name="" id="" className="form-control">
 			  	<option value="">Action</option>
 			  </select>
 			  <input type="text" className="form-control" placeholder="#target"/>
-			  <button type="submit" class="btn btn-info">Add</button>
-			</form>
+			  <button type="submit" className="btn btn-info">Add</button>
+			</div>
 		);
 
 		const ManualTestData = (props) => (
