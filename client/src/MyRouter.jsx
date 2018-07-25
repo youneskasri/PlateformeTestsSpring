@@ -18,6 +18,7 @@ import ShowPlan from "./pages/ShowPlan";
 import EditPlan from "./pages/EditPlan";
 
 import ShowScenario from "./pages/ShowScenario";
+import EditScenario from "./pages/EditScenario";
 
 const MyRouter = (props) => {
 
@@ -45,6 +46,7 @@ const MyRouter = (props) => {
 					<Route exact path='/projects/new' component={NewProject} />
 
 					{/* Be careful, These Are Using Nested Routes */}
+					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios/:idScenario/edit' component={EditScenario} />	
 					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios/:idScenario/cases' component={ShowScenario} />	
 					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/edit' component={EditPlan} />	
 					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios' component={ShowPlan} />

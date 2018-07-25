@@ -33,18 +33,18 @@ public class ScenarioController {
 		return scenarioService.createScenario(idPlan, data);
 	}
 	
-	@GetMapping("/{idPlan}")
+	@GetMapping("/{idScenario}")
 	public ScenarioDTO show(@PathVariable Long idScenario) {
 		System.out.println("idScenario " + idScenario);
 		return scenarioService.retrieveScenarioById(idScenario);
 	}
 	
-	@PostMapping("/{idPlan}")
+	@PostMapping("/{idScenario}")
 	public ScenarioDTO update(@PathVariable Long idScenario, @RequestBody ScenarioForm data) {
 		return scenarioService.updateScenario(idScenario, data);
 	}
 	
-	@DeleteMapping("/{idPlan}")
+	@DeleteMapping("/{idScenario}")
 	public Boolean destroy(@PathVariable Long idScenario) {
 		return scenarioService.removeScenarioById(idScenario);
 	}

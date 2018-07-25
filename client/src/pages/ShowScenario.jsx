@@ -18,7 +18,7 @@ function getTestCases(){
 }
 
 function deleteScenarioById(idProject, idPlan, idScenario) {
-	return  Axios.delete(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/${idScenario}`)
+	return  Axios.delete(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}`)
 		.then(response => response.data);
 }
 
@@ -39,7 +39,7 @@ class ShowScenario extends React.Component {
 			      <div className="bg-light p-4 pt-1 border rounded">
 			        <h1 className="text-info">Are you sure?</h1>
 			        <hr/>
-			        <p>You want to delete this Plan?</p>
+			        <p>You want to delete this Scenario?</p>
 			        <div className="btn-group ml-5 pr-3">
 				        <button className="btn btn-info" onClick={onClose}>No, don't</button>
 				        <button className="btn btn-danger" onClick={() => {
@@ -79,7 +79,7 @@ class ShowScenario extends React.Component {
 		let { idProject, idPlan, idScenario } = this.props.match.params;
 		console.log(idProject, ' ', idPlan, ' ', idScenario);
 
-		let plan = this.state.plan;
+		let { scenario } = this.state;
 
 		let testCases = getTestCases().map(testCase => 	(
 			<li key={testCase.idCase} className="list-group-item">
@@ -105,8 +105,7 @@ class ShowScenario extends React.Component {
 		);
 
 		let dynamicCanvas = (
-			<Switch>
-				
+			<Switch>				
 				<Route path={`${this.props.match.path}/new`} component={NewCase} />	
 				<Route path={`${this.props.match.path}/:idCase`} component={Case} />
 				<Route component={NoMatch} />
@@ -134,7 +133,7 @@ class ShowScenario extends React.Component {
 						</div>
 					</div>			
 					<div className="col-10">
-						<Scenario match={this.props.match} plan={plan} hideLinks/>
+						<Scenario match={this.props.match} scenario={scenario} hideLinks/>
 					</div>
 				</div>
 				<div className="mt-3"></div>

@@ -46,7 +46,13 @@ public class ScenarioService implements IScenarioService {
 
 	@Override
 	public ScenarioDTO createScenario(Long idPlan, ScenarioForm data) {
+		
+		Optional<Plan> opt = planRepository.findById(idPlan);
+		Plan plan = opt.get();
+		
 		Scenario scenario = ScenarioForm.extract(data);
+		scenario.setPlan(plan);
+		
 		scenario = scenarioRepository.save(scenario);
 		return ScenarioDTO.convert(scenario);
 	}

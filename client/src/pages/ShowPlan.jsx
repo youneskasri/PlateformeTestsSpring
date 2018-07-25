@@ -26,6 +26,7 @@ class ShowPlan extends React.Component {
 
 	state={
 		plan: {},
+		scenarios: [],
 		redirection: null
 	}
 
@@ -72,6 +73,12 @@ class ShowPlan extends React.Component {
 		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/`)
 			.then(res => res.data)
 			.then(plan => this.setState({ plan }));
+
+		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios`)
+			.then(res => res.data)
+			.then(scenarios => { console.log(scenarios); return scenarios; })
+			.then(scenarios => this.setState({ scenarios }))
+			.catch(console.log);
 	}
 
 	render ()  {
@@ -81,9 +88,9 @@ class ShowPlan extends React.Component {
 
 		let plan = this.state.plan;
 
-		let testScenarios = getTestScenarios().map(testScenario => 	(
+		let testScenarios = this.state.scenarios.map(testScenario => 	(
 			<li key={testScenario.idScenario} className="list-group-item">
-				<Link className="text-info" to={`${this.props.match.url}/${testScenario.idScenario}`}>{ testScenario.title }</Link>
+				<Link className="text-info" to={`${this.props.match.url}/${testScenario.idScenario}/cases`}>{ testScenario.title }</Link>
 			</li>
 		));
 
@@ -93,7 +100,7 @@ class ShowPlan extends React.Component {
 		const NoMatch = (props) => (
 			<div className="text-center pt-5 pb-3 text-info border ">
 				<h5>
-					<i class="fas fa-book-open fa-5x"></i>
+					<i className="fas fa-book-open fa-5x"></i>
 				</h5>
 				<hr/>
 				<div className="btn-group">

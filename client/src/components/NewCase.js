@@ -44,11 +44,13 @@ export default class NewCase extends React.Component {
 		let testCaseInputs = this.state.automated ?
 			<AutomatedTestData />: <ManualTestData />
 
+		let { idProject, idPlan, idScenario } = this.props.match.params;
+		
 		return (
 			<div className="card">
 				<h5 className="card-header">
 					New Test Case
-					<Link className="float-right text-info" to={`/projects/${this.props.match.params.idProject}/plans/${this.props.match.params.idPlan}/cases`}>
+					<Link className="float-right text-info" to={`/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases`}>
 						<i className="fas fa-times"></i>
 					</Link>
 				</h5>

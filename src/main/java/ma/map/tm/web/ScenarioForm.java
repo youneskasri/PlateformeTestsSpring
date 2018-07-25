@@ -2,10 +2,12 @@ package ma.map.tm.web;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ma.map.tm.entities.Scenario;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ScenarioForm {
 	
 	private String title;

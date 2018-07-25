@@ -7,6 +7,10 @@ const Scenario = (props) => {
 
 	let returnLink = `/projects/${idProject}/plans/${idPlan}/scenarios`; 
 
+	let { scenario } = props;
+
+    if (!scenario) return (<h5 className="font-weight-bold text-danger">No Scenario Passed In PROPS</h5>);
+
 	let links = props.hideLinks ? '' : (		
 						<div className="list-group"><Link className="text-info" to={`/projects/${idProject}/plans/${idPlan}/scenarios`}>
 								Historique des executions
@@ -21,7 +25,7 @@ const Scenario = (props) => {
 
 	return (
 		<div className="card">
-			<h5 className="card-header"><small className="text-info font-weight-bold pr-2">Test Scenario Title </small> {idScenario}
+			<h5 className="card-header"><small className="text-info font-weight-bold pr-2">Test Scenario Title </small> {scenario.title}
 				<Link className="float-right text-info" to={returnLink} >
 					<i className="fas fa-times"></i>
 				</Link>
@@ -29,7 +33,7 @@ const Scenario = (props) => {
 			<div className="card-body">				
 				<p>
 					<span className="font-weight-bold text-info pr-2">Test Scenario Description </span>
-					Lorem ipsum lorem ipsum
+					{ scenario.description }
 				</p> 
 				{ links }
 			</div>
