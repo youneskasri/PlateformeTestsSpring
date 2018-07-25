@@ -21,14 +21,16 @@ const Scenario = (props) => {
 
 	return (
 		<div className="card">
-			<h5 className="card-header">Test Scenario : {idScenario}
+			<h5 className="card-header"><small className="text-info font-weight-bold pr-2">Test Scenario Title </small> {idScenario}
 				<Link className="float-right text-info" to={returnLink} >
 					<i className="fas fa-times"></i>
 				</Link>
 			</h5>
 			<div className="card-body">				
-				<h4>Description </h4>
-				<p>Lorem ipsum lorem ipsum</p> 
+				<p>
+					<span className="font-weight-bold text-info pr-2">Test Scenario Description </span>
+					Lorem ipsum lorem ipsum
+				</p> 
 				{ links }
 			</div>
 			{ showMore }

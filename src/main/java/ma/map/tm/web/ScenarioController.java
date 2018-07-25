@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ma.map.tm.business.IScenarioService;
-import ma.map.tm.entities.PlanDTO;
+import ma.map.tm.entities.ScenarioDTO;
 
 @RestController
 @RequestMapping("/projects/{idProject}/plans/{idPlan}/scenarios")
@@ -29,23 +29,23 @@ public class ScenarioController {
 	}
 	
 	@PostMapping
-	public PlanDTO create(@PathVariable Long idProject, @RequestBody PlanForm data) {
-		return scenarioService.createPlan(idProject, data);
+	public ScenarioDTO create(@PathVariable Long idPlan, @RequestBody ScenarioForm data) {
+		return scenarioService.createScenario(idPlan, data);
 	}
 	
 	@GetMapping("/{idPlan}")
-	public PlanDTO show(@PathVariable Long idPlan) {
-		System.out.println("idPlan " + idPlan);
-		return scenarioService.retrievePlanById(idPlan);
+	public ScenarioDTO show(@PathVariable Long idScenario) {
+		System.out.println("idScenario " + idScenario);
+		return scenarioService.retrieveScenarioById(idScenario);
 	}
 	
 	@PostMapping("/{idPlan}")
-	public PlanDTO update(@PathVariable Long idPlan, @RequestBody PlanForm data) {
-		return scenarioService.updatePlan(idPlan, data);
+	public ScenarioDTO update(@PathVariable Long idScenario, @RequestBody ScenarioForm data) {
+		return scenarioService.updateScenario(idScenario, data);
 	}
 	
 	@DeleteMapping("/{idPlan}")
-	public Boolean destroy(@PathVariable Long idPlan) {
-		return scenarioService.removePlanById(idPlan);
+	public Boolean destroy(@PathVariable Long idScenario) {
+		return scenarioService.removeScenarioById(idScenario);
 	}
 }

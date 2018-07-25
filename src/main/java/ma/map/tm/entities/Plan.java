@@ -3,6 +3,7 @@ package ma.map.tm.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ public class Plan {
 	@ManyToOne
 	private Project project;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="plan")
 	private List<Scenario> scenarios = new ArrayList<>();
 	
 	public Plan(String title, String description) {
