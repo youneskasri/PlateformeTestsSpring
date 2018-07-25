@@ -18,7 +18,7 @@ export default class NewPlan extends React.Component {
 			.then(res => res.data)
 			.then(plan => {
 				if(plan) {
-					let redirection = ( <Redirect from={`this.props.match.path`} to={`/projects/${idProject}/plans/${plan.idPlan}/cases`} /> );
+					let redirection = ( <Redirect from={`this.props.match.path`} to={`/projects/${idProject}/plans/${plan.idPlan}/scenarios`} /> );
 					this.setState({ redirection });
 				}
 			}).catch(console.log);

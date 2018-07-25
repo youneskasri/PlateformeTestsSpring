@@ -112,7 +112,7 @@ class ShowProject extends React.Component {
 		let testPlans = this.state.testPlans.map(plan => (
 			<li key={plan.idPlan} className="list-group-item">{/*<Link to={`${this.props.match.url}/plans/1`}>{plan}</Link>*/}
 				<Link className="text-info" 
-					to={`/projects/${project.idProject}/plans/${plan.idPlan}/cases`}>{ plan['title'] }</Link>
+					to={`/projects/${project.idProject}/plans/${plan.idPlan}/scenarios`}>{ plan['title'] }</Link>
 			</li>
 		));
 

@@ -51,7 +51,7 @@ export default class EditPlan  extends React.Component {
 			console.log("Updated ",plan);
 
 			let redirection = (
-				<Redirect to={`/projects/${idProject}/plans/${idPlan}/cases`} />
+				<Redirect to={`/projects/${idProject}/plans/${idPlan}/scenarios`} />
 			);
 			this.setState({ redirection });
 		})

@@ -1,31 +1,31 @@
 import React from 'react';
 import { Link, Switch, Route, Redirect, BrowserRouter as Router } from "react-router-dom";
-import Plan from "../components/Plan";
 import Scenario from "../components/Scenario";
-import NewScenario from "../components/NewScenario";
+import Case from "../components/Case";
+import NewCase from "../components/NewCase";
 import Axios from "axios";
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
-function getTestScenarios(){
+function getTestCases(){
 	return [
-		{idScenario: 1, title: 'Test Scenario 001', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 001 ' },
-		{idScenario: 2, title: 'Test Scenario 002', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 002 ' },
-		{idScenario: 3, title: 'Test Scenario 003', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 003 ' },
-		{idScenario: 4, title: 'Test Scenario 004', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 004 ' }
+		{idCase: 1, title: 'Test Case 001', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 001 ' },
+		{idCase: 2, title: 'Test Case 002', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 002 ' },
+		{idCase: 3, title: 'Test Case 003', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 003 ' },
+		{idCase: 4, title: 'Test Case 004', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 004 ' }
 	];
 }
 
-function deletePlanById(idProject, idPlan) {
-	return  Axios.delete(`http://localhost:8080/projects/${idProject}/plans/${idPlan}`)
+function deleteScenarioById(idProject, idPlan, idScenario) {
+	return  Axios.delete(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/${idScenario}`)
 		.then(response => response.data);
 }
 
-class ShowPlan extends React.Component {
+class ShowScenario extends React.Component {
 
 	state={
-		plan: {},
+		scenario: {},
 		redirection: null
 	}
 
@@ -43,7 +43,7 @@ class ShowPlan extends React.Component {
 			        <div className="btn-group ml-5 pr-3">
 				        <button className="btn btn-info" onClick={onClose}>No, don't</button>
 				        <button className="btn btn-danger" onClick={() => {
-				            this.destroyPlan()
+				            this.destroyScenario()
 				            onClose()
 				        }}>Yes, Delete it!</button>
 			        </div>
@@ -53,14 +53,14 @@ class ShowPlan extends React.Component {
 	    });
 	}
 
-	destroyPlan = () => {
-		let { idProject, idPlan } = this.props.match.params;
+	destroyScenario = () => {
+		let { idProject, idPlan, idScenario } = this.props.match.params;
 
-		deletePlanById(idPlan, this.state.plan.idPlan)
+		deleteScenarioById(idProject, idPlan, idScenario)
 			.then(bool => console.log('deleted ?', bool))
 			.then(()=> {
 				let redirection = (
-					<Redirect to={`/projects/${idProject}/`} />
+					<Redirect to={`/projects/${idProject}/plans/${idPlan}/scenarios`} />
 				);
 				this.setState({ redirection });
 			})
@@ -69,9 +69,9 @@ class ShowPlan extends React.Component {
 
 	componentDidMount() {
 		let { idProject, idPlan, idScenario } = this.props.match.params;
-		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/`)
+		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}`)
 			.then(res => res.data)
-			.then(plan => this.setState({ plan }));
+			.then(scenario => this.setState({ scenario }));
 	}
 
 	render ()  {
@@ -81,9 +81,9 @@ class ShowPlan extends React.Component {
 
 		let plan = this.state.plan;
 
-		let testScenarios = getTestScenarios().map(testScenario => 	(
-			<li key={testScenario.idScenario} className="list-group-item">
-				<Link className="text-info" to={`${this.props.match.url}/${testScenario.idScenario}`}>{ testScenario.title }</Link>
+		let testCases = getTestCases().map(testCase => 	(
+			<li key={testCase.idCase} className="list-group-item">
+				<Link className="text-info" to={`${this.props.match.url}/${testCase.idCase}`}>{ testCase.title }</Link>
 			</li>
 		));
 
@@ -107,47 +107,47 @@ class ShowPlan extends React.Component {
 		let dynamicCanvas = (
 			<Switch>
 				
-				<Route path={`${this.props.match.path}/new`} component={NewScenario} />	
-				<Route path={`${this.props.match.path}/:idScenario`} component={Scenario} />
+				<Route path={`${this.props.match.path}/new`} component={NewCase} />	
+				<Route path={`${this.props.match.path}/:idCase`} component={Case} />
 				<Route component={NoMatch} />
 			</Switch>
 		);
 
 		console.log(this.props.match.path);
 
-		console.log("Rendering ShowPlan");
+		console.log("Rendering ShowScenario");
 		return (
 			<div className="container mt-5">
 				{ this.state.redirection }
 				<div className="row">
 					<div className="col-2">
 						<h1 className="text-center text-info">
-						Plan N°{idProject}-{idPlan}
+						Scenario N°{idProject}-{idPlan}-{idScenario}
 						</h1>
 						<div className="text-center">
-							<Link to={`/projects/${idProject}/plans/${idPlan}/edit`} className="text-secondary">Update</Link>
+							<Link to={`/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/edit`} className="text-secondary">Update</Link>
 							<Link to="/" onClick={this.handleDelete} className="ml-1 text-danger">Delete</Link>
 						</div>
 						<div className="text-center">
 							<hr className="mb-0"/>
-							<Link to={`/projects/${idProject}`} className="text-info">Back to Project</Link>
+							<Link to={`/projects/${idProject}/plans/${idPlan}/scenarios`} className="text-info">Back to Plan</Link>
 						</div>
 					</div>			
 					<div className="col-10">
-						<Plan match={this.props.match} plan={plan} hideLinks/>
+						<Scenario match={this.props.match} plan={plan} hideLinks/>
 					</div>
 				</div>
 				<div className="mt-3"></div>
 				<div className="row">
 					<div className="col-md-6">
 						<h4 className="card-header bg-lightBlue">
-							Test Scenarios
+							Test Cases
 							<Link to={`${this.props.match.url}/new`} className="text-info float-right">
-								<small><i className="fa fa-plus"></i> Add a test Scenario</small>
+								<small><i className="fa fa-plus"></i> Add a test Case</small>
 							</Link>
 						</h4>
 						<ul className="list-group list-group-flush">
-							{ testScenarios }
+							{ testCases }
 						</ul>					
 					</div>
 					<div className="col-md-6">
@@ -160,4 +160,4 @@ class ShowPlan extends React.Component {
 
 }
 
-export default ShowPlan;
+export default ShowScenario;
