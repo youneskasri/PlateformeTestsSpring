@@ -30,8 +30,8 @@ public class ScenarioServiceTests {
 	@Autowired
 	private ScenarioRepository scenarioRepository;
 	
-	 @Autowired
-	 private PlanRepository planRepository;
+	@Autowired
+ 	private PlanRepository planRepository;
 	
 	@Test
 	public void contextLoads() {

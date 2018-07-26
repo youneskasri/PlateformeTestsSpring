@@ -13,13 +13,16 @@ export default class NewScenario extends React.Component {
 		evt.preventDefault();
 
 		let title = this.refs.title.value;
-		let description = this.refs.title.description;
+		let description = this.refs.description.value;
+
+		console.log('POST Scenario Data', title, description);
 
 		let { idProject, idPlan } = this.props.match.params;
 		
 		Axios.post(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios`, { title, description })
 			.then(res => res.data)
 			.then(scenario => {
+				console.log("Saved Scenario", scenario);
 				if(scenario) {
 					let redirection = ( <Redirect to={`/projects/${idProject}/plans/${idPlan}/scenarios/${scenario.idScenario}/cases`} /> );
 					this.setState({ redirection });

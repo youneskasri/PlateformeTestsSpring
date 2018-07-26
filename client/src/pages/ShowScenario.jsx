@@ -8,14 +8,6 @@ import Axios from "axios";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
-function getTestCases(){
-	return [
-		{idCase: 1, title: 'Test Case 001', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 001 ' },
-		{idCase: 2, title: 'Test Case 002', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 002 ' },
-		{idCase: 3, title: 'Test Case 003', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 003 ' },
-		{idCase: 4, title: 'Test Case 004', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 004 ' }
-	];
-}
 
 function deleteScenarioById(idProject, idPlan, idScenario) {
 	return  Axios.delete(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}`)
@@ -26,6 +18,7 @@ class ShowScenario extends React.Component {
 
 	state={
 		scenario: {},
+		cases: [],
 		redirection: null
 	}
 
@@ -72,7 +65,16 @@ class ShowScenario extends React.Component {
 		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}`)
 			.then(res => res.data)
 			.then(scenario => this.setState({ scenario }));
+
+
+		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases`)
+			.then(res => res.data)
+			.then(cases => this.setState({ cases }))
+			.then(() => console.log(this.state.cases))
+			.catch(console.log);
 	}
+
+
 
 	render ()  {
 
@@ -81,9 +83,9 @@ class ShowScenario extends React.Component {
 
 		let { scenario } = this.state;
 
-		let testCases = getTestCases().map(testCase => 	(
-			<li key={testCase.idCase} className="list-group-item">
-				<Link className="text-info" to={`${this.props.match.url}/${testCase.idCase}`}>{ testCase.title }</Link>
+		let testCases = this.state.cases.map(testCase => 	(
+			<li key={testCase.idTestCase} className="list-group-item">
+				<Link className="text-info" to={`${this.props.match.url}/${testCase.idTestCase}`}>{ testCase.objective }</Link>
 			</li>
 		));
 
@@ -93,7 +95,7 @@ class ShowScenario extends React.Component {
 		const NoMatch = (props) => (
 			<div className="text-center pt-5 pb-3 text-info border ">
 				<h5>
-					<i class="fas fa-book-open fa-5x"></i>
+					<i className="fas fa-book-open fa-5x"></i>
 				</h5>
 				<hr/>
 				<div className="btn-group">
@@ -106,7 +108,6 @@ class ShowScenario extends React.Component {
 
 		let dynamicCanvas = (
 			<Switch>				
-				<Route path={`${this.props.match.path}/new`} component={NewCase} />	
 				<Route path={`${this.props.match.path}/:idCase`} component={Case} />
 				<Route component={NoMatch} />
 			</Switch>

@@ -8,14 +8,6 @@ import Axios from "axios";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
-function getTestScenarios(){
-	return [
-		{idScenario: 1, title: 'Test Scenario 001', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 001 ' },
-		{idScenario: 2, title: 'Test Scenario 002', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 002 ' },
-		{idScenario: 3, title: 'Test Scenario 003', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 003 ' },
-		{idScenario: 4, title: 'Test Scenario 004', description: 'Mox dicta finierat, multitudo omnis ad, quae imperator voluit, promptior laudato 004 ' }
-	];
-}
 
 function deletePlanById(idProject, idPlan) {
 	return  Axios.delete(`http://localhost:8080/projects/${idProject}/plans/${idPlan}`)

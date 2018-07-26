@@ -23,5 +23,5 @@ public class TestExecution {
 	private String remarks;
 	
 	@ManyToOne
-	private TestCase testCase;
+	private Case testCase;
 }
