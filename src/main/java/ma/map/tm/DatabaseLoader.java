@@ -6,14 +6,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import ma.map.tm.dao.CaseRepository;
+import ma.map.tm.dao.PlanRepository;
 import ma.map.tm.dao.ProjectRepository;
+import ma.map.tm.dao.ScenarioRepository;
+import ma.map.tm.entities.Case;
+import ma.map.tm.entities.Plan;
 import ma.map.tm.entities.Project;
+import ma.map.tm.entities.Scenario;
+import ma.map.tm.entities.TestType;
 
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
 	private final ProjectRepository repository;
-
+	
+	@Autowired
+	private PlanRepository planRepository;
+	@Autowired
+	private ScenarioRepository scenarioRepository;
+	@Autowired
+	private CaseRepository caseRepository;
+	
 	@Autowired
 	public DatabaseLoader(ProjectRepository repository) {
 		this.repository = repository;
@@ -29,5 +43,24 @@ public class DatabaseLoader implements CommandLineRunner {
 		this.repository.save(p2);
 		this.repository.save(p3);
 		this.repository.save(p4);
+		
+		Plan p = new Plan();
+		p.setProject(p1);
+		p.setTitle("Plan 1");
+		
+		p = planRepository.save(p);
+		
+		Scenario sc = new Scenario();
+		sc.setPlan(p);
+		sc.setTitle("Scenario 1");
+		
+		sc =scenarioRepository.save(sc);
+		
+		Case testCase = new Case();
+		testCase.setScenario(sc);
+		testCase.setObjective("OBjective");
+		testCase.setType(TestType.MANUAL_TEST);
+		
+		testCase = caseRepository.save(testCase);
 	}
 }

@@ -121,9 +121,9 @@ class ShowScenario extends React.Component {
 				{ this.state.redirection }
 				<div className="row">
 					<div className="col-2">
-						<h1 className="text-center text-info">
+						<h2 className="text-center text-info">
 						Scenario N°{idProject}-{idPlan}-{idScenario}
-						</h1>
+						</h2>
 						<div className="text-center">
 							<Link to={`/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/edit`} className="text-secondary">Update</Link>
 							<Link to="/" onClick={this.handleDelete} className="ml-1 text-danger">Delete</Link>

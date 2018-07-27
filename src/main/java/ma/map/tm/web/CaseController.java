@@ -45,7 +45,7 @@ public class CaseController {
 		return caseService.updateCase(idCase, data);
 	}
 	
-	@DeleteMapping("/{idScenario}")
+	@DeleteMapping("/{idCase}")
 	public Boolean destroy(@PathVariable Long idCase) {
 		return caseService.removeCaseById(idCase);
 	}

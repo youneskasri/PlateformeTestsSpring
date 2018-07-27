@@ -33,7 +33,7 @@ public class Case {
 		setObjective(data.getObjective());
 		setDateOfCreation(data.getDateOfCreation());
 		
-		if ( data.getAutomated() == true ) {
+		if ( data != null && data.getAutomated() == true ) {
 			setType(TestType.AUTOMATED_TEST);
 		} else {
 			setType(TestType.MANUAL_TEST);
