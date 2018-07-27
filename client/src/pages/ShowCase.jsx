@@ -4,6 +4,7 @@ import Scenario from "../components/Scenario";
 import Case from "../components/Case";
 import NewCase from "../components/NewCase";
 import Axios from "axios";
+import Execution from "../components/Execution";
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
@@ -21,7 +22,12 @@ class ShowCase extends React.Component {
 		executions: [],
 		redirection: null,
 
-		showExecuteForm: false
+		displayedExecution: null,
+
+		showExecuteForm: false,
+
+
+		didItPass: false
 	}
 
 	handleDelete = (evt) => {
@@ -77,6 +83,25 @@ class ShowCase extends React.Component {
 		this.setState({ showExecuteForm });
 	}
 
+
+	handleSaveExecution = () => {
+
+		let status = this.state.didItPass;
+		
+		let outputs = this.refs.outputs.value;
+		let remarks = this.refs.remarks.value;
+
+		let { idProject, idPlan, idScenario, idCase } = this.props.match.params;
+
+
+		Axios.post(
+			`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}/executions`,
+			{ outputs, status, remarks}
+			).then(res => res.data)
+			.then(exec => alert(exec.outputs))
+			.catch(err => alert(err));
+	}
+
 	componentDidMount() {
 		let { idProject, idPlan, idScenario, idCase } = this.props.match.params;
 		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}`)
@@ -84,7 +109,7 @@ class ShowCase extends React.Component {
 			.then(testCase => this.setState({ testCase }));
 
 
-		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}/history`)
+		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}/executions`)
 			.then(res => res.data)
 			.then(executions => this.setState({ executions }))
 			.then(() => console.log(this.state.executions))
@@ -92,6 +117,34 @@ class ShowCase extends React.Component {
 	}
 
 
+	typedOutputs = (evt) => {
+		let outputs = evt.target.value;
+		let { expectedOutputs } = this.state.testCase;
+
+		if (outputs.trim() === expectedOutputs.trim()) {
+			this.setState({ didItPass: true})
+		} else {
+			this.setState({ didItPass: false})
+		}
+	}
+
+	toggleDidItPass = () => {
+		let didItPass = ! this.state.didItPass;
+		this.setState({ didItPass });
+	}
+
+	handleClickOnExecution = (idTestExecution) => {
+
+		let execution = this.state.executions.filter(ex => ex.idTestExecution === idTestExecution)[0];
+
+		console.log(execution);
+
+		let displayedExecution = (
+			<Execution execution={execution} />
+		);
+
+		this.setState({ showExecuteForm: false, displayedExecution });
+	}
 
 	render ()  {
 
@@ -104,19 +157,61 @@ class ShowCase extends React.Component {
 			<li key={execution.idTestExecution} className="list-group-item">
 				
 				{/* TODO */}
-				<Link onClick={(evt) => this.handleClickOnExecution()} className="text-info" >{ execution.dateOfExecution }</Link>
+				<a  href="#" onClick={() => this.handleClickOnExecution(execution.idTestExecution)} className="text-info" >{ execution.dateOfExecution }</a>
 			</li>
 		));
 
 		let executeTestCase  = this.state.showExecuteForm  === true ? (
-			<form action="">
-				<button onClick={this.hideExecuteForm}>Close</button>
-				<input type="text"/>
-				<input type="text"/>
-				<button>ok</button>
-			</form>
+			<div className="card">
+				<div className="card-header">
+					Manual Test Case Execution <a className="float-right text-info" href="#" onClick={this.hideExecuteForm}><i className="far fa-times-circle"></i></a>
+				</div>
+				<div className="card-body">
+					<form action="" className="container-fluid">
+						<div className="row">
+							<div className="col-12">
+								<label>Outputs</label>
+								<textarea ref="outputs" onChange={this.typedOutputs} rows="3" className="form-control"></textarea>
+							</div>
+						</div>
+						<div className="row pt-2">
+							<div className="col-10">
+								<label>Did it pass ?</label>
+								<label className="p-2">
+									{
+										this.state.didItPass ? <span className="text-success">Yes</span> : <span className="text-danger">No</span>
+									}
+								</label>
+								<label className="switch">
+									  <input type="checkbox" checked={this.state.didItPass} onChange={this.toggleDidItPass} />
+									  { 
+									  	this.state.didItPass ? 
+									  	<span className="slider round bg-success"></span>
+									  	: <span className="slider round bg-danger"></span>									  	
+									  }
+									  _
+								</label>
+							</div>
+						</div>
+						<hr/>
+						<div className="row">
+							<div className="col-2">
+								<label >Remarks</label>							
+							</div>
+							<div className="col-8">
+								<input ref="remarks" type="text" className="form-control"/>
+							</div>
+							<div className="col-2">
+								<button onClick={this.handleSaveExecution} className="btn btn-info btn-block">
+									Save
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
 		): '';
- 
+
 		return (
 			<div className="container mt-5">
 				{ this.state.redirection }
@@ -156,6 +251,7 @@ class ShowCase extends React.Component {
 					</div>
 					<div className="col-md-6">
 						{ executeTestCase }
+						{ this.state.displayedExecution }
 					</div>
 				</div>
 			</div>

@@ -24,6 +24,8 @@ import NewCase from "./pages/NewCase";
 import ShowCase from "./pages/ShowCase";
 import EditCase from "./pages/EditCase";
 
+import AutomatedCaseForm from "./components/AutomatedCaseForm";
+
 const MyRouter = (props) => {
 
 	let routes = {
@@ -59,6 +61,8 @@ const MyRouter = (props) => {
 					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios' component={ShowPlan} />
 					<Route path='/projects/:idProject(\d+)/edit' component={EditProject} />
 					<Route path='/projects/:idProject(\d+)' component={ShowProject} />
+
+					<Route path='/test' component={AutomatedCaseForm} />
 				</Switch>
 			</div>
 		</Router>

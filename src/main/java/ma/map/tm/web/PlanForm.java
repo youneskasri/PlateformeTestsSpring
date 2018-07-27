@@ -1,14 +1,11 @@
 package ma.map.tm.web;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ma.map.tm.entities.Plan;
-import ma.map.tm.entities.Project;
 
 @NoArgsConstructor
-@Getter @Setter
+@Data
 public class PlanForm {
 
 	private String title;

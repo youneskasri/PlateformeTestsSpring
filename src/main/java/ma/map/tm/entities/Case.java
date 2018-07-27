@@ -1,11 +1,14 @@
 package ma.map.tm.entities;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +29,9 @@ public class Case {
 	private String expectedOutputs;
 	private String steps;
 	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="testCase")
+	List<TestExecution> executions;
+	
 	@ManyToOne
 	private Scenario scenario;
 
@@ -33,7 +39,7 @@ public class Case {
 		setObjective(data.getObjective());
 		setDateOfCreation(data.getDateOfCreation());
 		
-		if ( data != null && data.getAutomated() == true ) {
+		if ( data.getAutomated() == true ) {
 			setType(TestType.AUTOMATED_TEST);
 		} else {
 			setType(TestType.MANUAL_TEST);

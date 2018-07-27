@@ -69,7 +69,7 @@ export default class NewCase extends React.Component {
 			  	<option value="">Action</option>
 			  </select>
 			  <input type="text" className="form-control" placeholder="#target"/>
-			  <button type="submit" className="btn btn-info">Add</button>
+			  <button onClick={this.addInstructions} className="btn btn-info">Add</button>
 			</div>
 		);
 
