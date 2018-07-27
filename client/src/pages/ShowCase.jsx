@@ -84,7 +84,9 @@ class ShowCase extends React.Component {
 	}
 
 
-	handleSaveExecution = () => {
+	handleSaveExecution = (event) => {
+
+		event.preventDefault();
 
 		let status = this.state.didItPass;
 		
@@ -98,7 +100,11 @@ class ShowCase extends React.Component {
 			`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}/executions`,
 			{ outputs, status, remarks}
 			).then(res => res.data)
-			.then(exec => alert(exec.outputs))
+			.then(execution => {
+				let executions = this.state.executions.slice();
+				executions.push(execution);
+				this.setState({ executions });
+			})
 			.catch(err => alert(err));
 	}
 
@@ -140,11 +146,16 @@ class ShowCase extends React.Component {
 		console.log(execution);
 
 		let displayedExecution = (
-			<Execution execution={execution} />
+			<Execution handleClose={this.closeShowExecution} execution={execution} />
 		);
 
 		this.setState({ showExecuteForm: false, displayedExecution });
 	}
+
+	closeShowExecution = () => {
+		this.setState({ displayedExecution: null });
+	}
+
 
 	render ()  {
 
@@ -157,7 +168,11 @@ class ShowCase extends React.Component {
 			<li key={execution.idTestExecution} className="list-group-item">
 				
 				{/* TODO */}
-				<a  href="#" onClick={() => this.handleClickOnExecution(execution.idTestExecution)} className="text-info" >{ execution.dateOfExecution }</a>
+				<a  href="#" onClick={() => this.handleClickOnExecution(execution.idTestExecution)} className="text-info" >
+					{ execution.dateOfExecution }  
+					{ execution.status === true ? <span className="text-success font-weight-bold float-right">OK</span> 
+						: <span className="text-danger font-weight-bold float-right">NOT OK</span>}
+				</a>
 			</li>
 		));
 
