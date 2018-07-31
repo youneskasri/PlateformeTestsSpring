@@ -9,8 +9,10 @@ export default class EditPlan  extends React.Component {
 	
 	state = {
 		plan: {
-			description: ''
-		}
+			description: '<i>Click here to show and update the data.. </i>'
+		}, 
+
+		refresh: 1
 	}	
 	
 	componentWillMount() {
@@ -29,6 +31,12 @@ export default class EditPlan  extends React.Component {
 
 	componentDidMount(){
 		console.log("EditPlan mounted");
+		console.log(this.state.plan);
+		console.log("editor", this.refs.ckeditor);
+
+		if ( ! this.refs.ckeditor.props.content) {
+			this.setState({ refresh: this.state.refresh + 1 });
+		}
 	}
 	
 	handleDescriptionChange = (event) => {
@@ -38,6 +46,10 @@ export default class EditPlan  extends React.Component {
 		let plan = this.state.plan;
 		plan.description = description;
 		this.setState({ plan });
+	}
+
+	onFocus = (event) => {
+		event.editor.setData(this.state.plan.description);
 	}
 
 	handleSubmit = (evt) => {
@@ -95,16 +107,19 @@ export default class EditPlan  extends React.Component {
 								</div>
 								<div className="pb-3">
 									<label>Plan description</label>
-				            		<CKEditor 
+									{
+										this.state.refresh > 0 ?
+										<CKEditor 
+				            				ref="ckeditor"
 				            				activeClass="p10" 
-		        		      				content={this.state.plan.description} 
+		        		      				content={ this.state.plan.description } 
 		              						events={{
+		              							"focus": this.onFocus,
 		                						"change": this.handleDescriptionChange
               								}}
-              							    config={{
-	        									removePlugins: "elementspath,uploadimage,uploadfile"
-	    									}}
-		             				/>	
+		             				/>	: ''
+									}
+				            		
 		             			</div>						
 								<button className="btn btn-info btn-block mb-3">Save</button>		
 							</form>

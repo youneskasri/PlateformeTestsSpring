@@ -6,8 +6,15 @@ import Axios from 'axios';
 export default class EditScenario  extends React.Component {
 	
 	state = {
-		scenario: {}
+		scenario: {
+			description: '<i>Click here to show and update the data.. </i>'
+		}
 	}	
+
+	/* Todo */
+	onFocus = (event) => {
+		event.editor.setData(this.state.scenario.description);
+	}
 	
 	componentDidMount() {
 

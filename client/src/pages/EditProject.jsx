@@ -12,9 +12,14 @@ export default class EditProject  extends React.Component {
 	state = {
 		project: {
 			startDate: moment(),
-			endDate: moment()
+			endDate: moment(),
+			description: '<i>Click here to show and update the data.. </i>'
 		}
 	}	
+
+	onFocus = (event) => {
+		event.editor.setData(this.state.project.description);
+	}
 
 	componentWillMount() {
 
@@ -101,7 +106,8 @@ export default class EditProject  extends React.Component {
 				            				activeClass="p10" 
 		        		      				content={this.state.project.description} 
 		              						events={{
-		                						"change": this.handleDescriptionChange
+		                						"change": this.handleDescriptionChange,
+		                						"focus": this.onFocus
               								}}
 		             				/>									
 
