@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import HtmlParser from 'html-react-parser';
 
 const Project = (props) => (
   <div className="card mb-3">
@@ -24,7 +25,7 @@ const Project = (props) => (
     	</div>
     </div>
     <div className="card-body">
-      {props.project.description}
+      { HtmlParser(props.project.description || '') }
       {
       	props.showLink ? <Link className="float-right" to={'/projects/'+props.project.idProject}> Show</Link> : ''
       }

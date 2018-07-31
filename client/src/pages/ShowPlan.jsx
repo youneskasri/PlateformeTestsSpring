@@ -138,7 +138,7 @@ class ShowPlan extends React.Component {
 				</div>
 				<div className="mt-3"></div>
 				<div className="row">
-					<div className="col-md-6">
+					<div className="col-md-5">
 						<h4 className="card-header bg-lightBlue">
 							Test Scenarios
 							<Link to={`${this.props.match.url}/new`} className="text-info float-right">
@@ -149,7 +149,7 @@ class ShowPlan extends React.Component {
 							{ testScenarios }
 						</ul>					
 					</div>
-					<div className="col-md-6">
+					<div className="col-md-7">
 						{ dynamicCanvas }
 					</div>
 				</div>

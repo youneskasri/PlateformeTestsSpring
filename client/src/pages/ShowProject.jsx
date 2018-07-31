@@ -8,6 +8,7 @@ import NewPlan from "../components/NewPlan";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
+
 function retrieveTestPlansByProjectId(idProject){
 	return Axios.get(`http://localhost:8080/projects/${idProject}/plans`)
 		.then(response => response.data);
@@ -144,7 +145,7 @@ class ShowProject extends React.Component {
 					</div>
 				</div>
 				<div className="row">
-					<div className="col-md-6">
+					<div className="col-md-5">
 						<h4 className="card-header bg-lightBlue">
 							Test Plans
 							<Link to={`/projects/${project.idProject}/plans/new`} className="text-info float-right">
@@ -155,7 +156,7 @@ class ShowProject extends React.Component {
 							{ testPlans }
 						</ul>					
 					</div>
-					<div className="col-md-6">
+					<div className="col-md-7">
 						{dynamicCanvas}
 					</div>
 				</div>

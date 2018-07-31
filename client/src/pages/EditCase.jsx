@@ -6,7 +6,8 @@ export default class NewCase extends React.Component {
 
 	state = {
 		testCase: {},
-		redirection: null
+		redirection: null,
+		instructions: []
 	}
 
 	toggleAutomated = (event) => {
@@ -65,11 +66,11 @@ export default class NewCase extends React.Component {
 
 		let automatedTestForm = (
 			<div className="form-inline mt-1">
-			  <select name="" id="" className="form-control">
+			  <select ref="action" className="form-control">
 			  	<option value="">Action</option>
 			  </select>
-			  <input type="text" className="form-control" placeholder="#target"/>
-			  <button onClick={this.addInstructions} className="btn btn-info">Add</button>
+			  <input type="text" ref="target" className="form-control" placeholder="#target"/>
+			  <button onClick={this.addInstruction} className="btn btn-info">Add</button>
 			</div>
 		);
 

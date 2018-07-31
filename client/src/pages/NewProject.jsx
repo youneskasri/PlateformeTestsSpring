@@ -6,13 +6,20 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import CKEditor from "react-ckeditor-component";
 
 export default class NewProject  extends React.Component {
 	state = {
 		startDate: moment(),
 		endDate: moment(),
+		description: null,
 		redirection: null
 	}	
+
+	handleDescriptionChange =  ( event ) =>  {
+		let description = event.editor.getData();
+		this.setState({ description });
+	}
 
 	handleStartDateChange = (startDate) => {
 		this.setState({ startDate });
@@ -26,7 +33,7 @@ export default class NewProject  extends React.Component {
 		evt.preventDefault();
 
 		let title = this.refs.title.value;
-		let description = this.refs.description.value;
+		let description = this.state.description;
 		let startDate = this.state.startDate;
 		let endDate = this.state.endDate;
 
@@ -63,8 +70,14 @@ export default class NewProject  extends React.Component {
 								<div className="pb-3 pt-4">
 									<input required type="text" className="form-control" placeholder="Project title" ref="title" />
 								</div>
-								<div className="pb-3">
-									<textarea required className="form-control" cols="30" rows="5" ref="description" placeholder="Project Description"></textarea>
+										<div className="pb-3">
+				            		<CKEditor 
+				            				activeClass="p10" 
+		        		      				content={this.state.description} 
+		              						events={{
+		                						"change": this.handleDescriptionChange
+              								}}
+		             				/>
 								</div>
 								<div className="pb-3 input-group">
 									<label className="form-control bg-light"> Start Date </label>

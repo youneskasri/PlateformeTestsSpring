@@ -2,30 +2,40 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Axios from 'axios';
 
+import CKEditor from "react-ckeditor-component";
+
 
 export default class EditPlan  extends React.Component {
 	
 	state = {
-		plan: {}
+		plan: {
+			description: ''
+		}
 	}	
 	
-	componentDidMount() {
+	componentWillMount() {
 
 		let { idProject, idPlan } = this.props.match.params;
 
 		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}`)
 		.then(res => res.data)
 		.then(plan => {
+			console.log("I made a request");
 			this.setState({ plan });
 		})
 		.catch(console.log);
 	}
 
 
-	handleDescriptionChange = () => {
-		let description = this.refs.description.value;
+	componentDidMount(){
+		console.log("EditPlan mounted");
+	}
+	
+	handleDescriptionChange = (event) => {
+		let description = event.editor.getData();
 		console.log(description);
-		let { plan } = this.state;
+
+		let plan = this.state.plan;
 		plan.description = description;
 		this.setState({ plan });
 	}
@@ -34,7 +44,7 @@ export default class EditPlan  extends React.Component {
 		evt.preventDefault();
 
 		let title = this.refs.title.value;
-		let description = this.refs.description.value;
+		let description = this.state.plan.description;
 		
 		let { idPlan } = this.state.plan;
 		let { idProject } = this.props.match.params;
@@ -59,6 +69,8 @@ export default class EditPlan  extends React.Component {
 		let { idPlan, title, description } = this.state.plan;
 		let { idProject } = this.props.match.params;
 
+		console.log(this.state.plan);
+
 		return (
 			<div className="container-fluid pt-4">
 				<div className="row mt-3">
@@ -70,7 +82,7 @@ export default class EditPlan  extends React.Component {
 										<h3>Edit Plan N°{idProject}-{idPlan}</h3>
 									</div>
 									<div className="col-2">
-										<Link to="/projects" className="btn btn-light text-info btn-block"><i className="fas fa-times"></i></Link>									
+										<Link to={`/projects/${idProject}/plans/${idPlan}/scenarios`} className="btn btn-light text-info btn-block"><i className="fas fa-times"></i></Link>									
 									</div>
 								</div>
 							</div>						
@@ -83,8 +95,17 @@ export default class EditPlan  extends React.Component {
 								</div>
 								<div className="pb-3">
 									<label>Plan description</label>
-									<textarea required className="form-control" cols="30" rows="5" ref="description" onChange={this.handleDescriptionChange} value={description}></textarea>
-								</div>						
+				            		<CKEditor 
+				            				activeClass="p10" 
+		        		      				content={this.state.plan.description} 
+		              						events={{
+		                						"change": this.handleDescriptionChange
+              								}}
+              							    config={{
+	        									removePlugins: "elementspath,uploadimage,uploadfile"
+	    									}}
+		             				/>	
+		             			</div>						
 								<button className="btn btn-info btn-block mb-3">Save</button>		
 							</form>
 							

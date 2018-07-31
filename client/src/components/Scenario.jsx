@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import HtmlParser from 'html-react-parser';
+
 
 const Scenario = (props) => {
 	
@@ -33,7 +35,7 @@ const Scenario = (props) => {
 			<div className="card-body">				
 				<p>
 					<span className="font-weight-bold text-info pr-2">Test Scenario Description </span>
-					{ scenario.description }
+					{ HtmlParser(scenario.description || '' ) }
 				</p> 
 				{ links }
 			</div>

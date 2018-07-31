@@ -62,7 +62,7 @@ const MyRouter = (props) => {
 					<Route path='/projects/:idProject(\d+)/edit' component={EditProject} />
 					<Route path='/projects/:idProject(\d+)' component={ShowProject} />
 
-					<Route path='/test' component={AutomatedCaseForm} />
+					
 				</Switch>
 			</div>
 		</Router>

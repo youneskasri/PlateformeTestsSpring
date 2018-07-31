@@ -2,10 +2,13 @@ import React from 'react';
 import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
 
+import CKEditor from "react-ckeditor-component";
+
 export default class NewScenario extends React.Component {
 
 	state = {
-		redirection: null
+		redirection: null,
+		description: '<i>Test Scenario description ...</i>'
 	}
 
 
@@ -13,7 +16,7 @@ export default class NewScenario extends React.Component {
 		evt.preventDefault();
 
 		let title = this.refs.title.value;
-		let description = this.refs.description.value;
+		let description = this.state.description;
 
 		console.log('POST Scenario Data', title, description);
 
@@ -30,6 +33,12 @@ export default class NewScenario extends React.Component {
 					console.log("Erreur")
 				}
 			}).catch(console.log);
+	}
+
+
+	handleDescriptionChange =  ( event ) =>  {
+		let description = event.editor.getData();
+		this.setState({ description });
 	}
 
 
@@ -51,9 +60,15 @@ export default class NewScenario extends React.Component {
 				<form className="card-body" onSubmit={this.handleSubmit}>
 					<input ref="title" type="text" className="form-control" placeholder="Test Scenario Title" required/>
 					<div className="mb-3"></div>				
-					<textarea ref="description" className="form-control" placeholder="Test Scenario description"></textarea>
+			    		<CKEditor 
+		     				activeClass="p10" 
+		       				content={this.state.description} 
+	    					events={{
+		           				"change": this.handleDescriptionChange
+              				}}
+             			/>
 					<div className="mb-3"></div>
-					<button className="btn mx-auto btn-block w-50">Save</button>
+					<button className="btn mx-auto btn-info btn-block w-50">Save</button>
 				</form>
 			</div>
 		);

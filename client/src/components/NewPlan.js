@@ -2,16 +2,20 @@ import React from 'react';
 import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
 
+
+import CKEditor from "react-ckeditor-component";
+
 export default class NewPlan extends React.Component {
 
 	state = {
-		redirection: null
+		redirection: null,
+		description: '<i>Test Plan description ...</i>'
 	}
 
 	handleSubmit = (evt) =>{
 		evt.preventDefault();
 		let title = this.refs.title.value;
-		let description = this.refs.title.value;
+		let description = this.state.description;
 		let idProject = this.props.match.params.idProject;
 
 		Axios.post(`http://localhost:8080/projects/${idProject}/plans`, {title, description})
@@ -22,6 +26,12 @@ export default class NewPlan extends React.Component {
 					this.setState({ redirection });
 				}
 			}).catch(console.log);
+	}
+
+
+	handleDescriptionChange =  ( event ) =>  {
+		let description = event.editor.getData();
+		this.setState({ description });
 	}
 
 	render() {
@@ -39,9 +49,15 @@ export default class NewPlan extends React.Component {
 				<form className="card-body" onSubmit={this.handleSubmit}>
 					<input required ref="title" type="text" className="form-control" placeholder="Plan Title"/>
 					<div className="mb-3"></div>
-					<textarea ref="description" className="form-control" placeholder="Test plan description"></textarea>
+			    		<CKEditor 
+		     				activeClass="p10" 
+		       				content={this.state.description} 
+	    					events={{
+		           				"change": this.handleDescriptionChange
+              				}}
+             			/>
 					<div className="mb-3"></div>
-					<button className="btn mx-auto btn-block w-50">Save</button>
+					<button className="btn mx-auto btn-info btn-block w-50">Save</button>
 				</form>
 			</div>
 		);	

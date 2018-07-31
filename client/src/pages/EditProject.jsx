@@ -6,6 +6,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import CKEditor from "react-ckeditor-component";
 
 export default class EditProject  extends React.Component {
 	state = {
@@ -15,7 +16,7 @@ export default class EditProject  extends React.Component {
 		}
 	}	
 
-	componentDidMount() {
+	componentWillMount() {
 
 		Axios.get('http://localhost:8080/projects/'+this.props.match.params.idProject)
 		.then(res => res.data)
@@ -37,8 +38,8 @@ export default class EditProject  extends React.Component {
 		this.setState({ project });
 	}
 
-	handleDescriptionChange = () => {
-		let description = this.refs.description.value;
+	handleDescriptionChange = (event) => {
+		let description = event.editor.getData();
 		console.log(description);
 		let project = this.state.project;
 		project.description = description;
@@ -50,7 +51,7 @@ export default class EditProject  extends React.Component {
 		evt.preventDefault();
 
 		let title = this.refs.title.value;
-		let description = this.refs.description.value;
+		let description = this.state.project.description;
 		
 		let { idProject, startDate, endDate } = this.state.project;
 
@@ -96,7 +97,14 @@ export default class EditProject  extends React.Component {
 									<input required type="text" className="form-control" defaultValue={title} ref="title" />
 								</div>
 								<div className="pb-3">
-									<textarea required className="form-control" cols="30" rows="5" ref="description" placeholder="Project Description" onChange={this.handleDescriptionChange} value={description}></textarea>
+				            		<CKEditor 
+				            				activeClass="p10" 
+		        		      				content={this.state.project.description} 
+		              						events={{
+		                						"change": this.handleDescriptionChange
+              								}}
+		             				/>									
+
 								</div>
 								<div className="pb-3 input-group">
 									<label className="form-control bg-light"> Start Date </label>

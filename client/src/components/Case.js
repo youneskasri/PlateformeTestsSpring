@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Axios from "axios";
+import HtmlParser from 'html-react-parser';
 
 
 export default class Case extends React.Component {  
@@ -49,7 +50,7 @@ export default class Case extends React.Component {
 							<div className="col-6">
 								<h6 className="text-info">Steps</h6>
 								<div>
-									{ testCase.steps }
+									{ HtmlParser(testCase.steps || '') }
 								</div>
 							</div>
 							<div className="col-6">

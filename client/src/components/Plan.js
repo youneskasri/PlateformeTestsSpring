@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from "react-router-dom";
 import Axios from "axios";
+import HtmlParser from 'html-react-parser';
 
 function retrieveTestPlan(idProject, idPlan){
 	console.log("Requesst !!")
@@ -53,10 +54,10 @@ class Plan extends React.Component {
 					</Link>
 				</h5>
 				<div className="card-body">	
-					<p>
+					<div>
 						<span className="font-weight-bold text-info pr-2">Test Plan Description </span>		
-						{plan.description}
-					</p> 
+						{ HtmlParser(plan.description || '') }
+					</div> 
 					{ links }
 				</div>
 				{ showMore }

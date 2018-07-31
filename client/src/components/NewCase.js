@@ -1,10 +1,17 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import CKEditor from "react-ckeditor-component";
 
 export default class NewCase extends React.Component {
 
 	state = {
-		automated: true
+		automated: true,
+		steps: '<i>Test Case description ...</i>'
+	}
+
+	handleStepsChange =  ( event ) =>  {
+		let steps = event.editor.getData();
+		this.setState({ steps });
 	}
 
 	toggleAutomated = (event) => {
@@ -25,7 +32,13 @@ export default class NewCase extends React.Component {
 
 		const ManualTestData = (props) => (
 			<div>
-				<textarea className="form-control" placeholder="Etapes du test"></textarea>
+			    		<CKEditor 
+		     				activeClass="p10" 
+		       				content={this.state.steps} 
+	    					events={{
+		           				"change": this.handleStepsChange
+              				}}
+             			/>
 				<div className="mb-3"></div>
 
 				<div className="container-fluid">

@@ -1,18 +1,25 @@
 import React from 'react';
 import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
+import CKEditor from "react-ckeditor-component";
 
 export default class NewCase extends React.Component {
 
 	state = {
 		automated: true,
-		redirection: null
+		redirection: null,
+		steps: '<i>Etapes du test ...</i>'
 	}
 
 	toggleAutomated = (event) => {
 		this.setState({ automated: !this.state.automated});
 	}
 
+
+	handleStepsChange =  ( event ) =>  {
+		let steps = event.editor.getData();
+		this.setState({ steps });
+	}
 
 	handleSubmit = (event) => {
 		event.preventDefault();
@@ -24,7 +31,7 @@ export default class NewCase extends React.Component {
 			// TODO
 			alert('TODO');
 		} else {
-			let steps = this.refs.steps.value;
+			let steps = this.state.steps;
 			let inputs = this.refs.inputs.value;
 			let expectedOutputs = this.refs.outputs.value;
 
@@ -34,9 +41,9 @@ export default class NewCase extends React.Component {
 
 			Axios.post(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases`, { objective, automated, inputs, expectedOutputs, steps } )
 				.then(res => res.data)
-				.then(res => {
-					console.log(res);
-					let redirection = (<Redirect to={`/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases`} />);
+				.then(testCase => {
+					console.log(testCase);
+					let redirection = (<Redirect to={`/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${testCase.idTestCase}`} />);
 					this.setState({ redirection });
 				})
 				.catch(err => alert(err.message));
@@ -57,7 +64,13 @@ export default class NewCase extends React.Component {
 
 		let manualTestForm =  (
 			<div>
-				<textarea ref="steps" className="form-control" placeholder="Etapes du test"></textarea>
+			    		<CKEditor 
+		     				activeClass="p10" 
+		       				content={this.state.steps} 
+	    					events={{
+		           				"change": this.handleStepsChange
+              				}}
+             			/>
 				<div className="mb-3"></div>
 
 				<div className="container-fluid">
@@ -104,7 +117,7 @@ export default class NewCase extends React.Component {
 								{ testCaseInputs }			
 
 								<div className="mb-3"></div>
-								<button className="btn mx-auto btn-block w-50">Save</button>
+								<button className="btn mx-auto btn-info btn-block w-50">Save</button>
 							</form>
 						</div>
 					</div>
