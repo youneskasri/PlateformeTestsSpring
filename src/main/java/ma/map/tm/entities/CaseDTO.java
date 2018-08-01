@@ -18,6 +18,8 @@ public class CaseDTO {
 	private String expectedOutputs;
 	private String steps;
 	
+	private int numberOfExecutions;
+	
 	public static CaseDTO convert(Case c) {
 		
 		CaseDTO dto = new CaseDTO();
@@ -30,6 +32,8 @@ public class CaseDTO {
 		dto.setInputs(c.getInputs());
 		dto.setExpectedOutputs(c.getExpectedOutputs());
 		dto.setSteps(c.getSteps());
+		
+		dto.setNumberOfExecutions(c.getExecutions() != null ? c.getExecutions().size() : 0);
 		
 		System.out.println(dto);
 		return dto;

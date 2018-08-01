@@ -33,10 +33,10 @@ const Scenario = (props) => {
 				</Link>
 			</h5>
 			<div className="card-body">				
-				<p>
+				<div>
 					<span className="font-weight-bold text-info pr-2">Test Scenario Description </span>
 					{ HtmlParser(scenario.description || '' ) }
-				</p> 
+				</div> 
 				{ links }
 			</div>
 			{ showMore }

@@ -79,7 +79,7 @@ export default class NewCase extends React.Component {
 							<textarea ref="inputs" className="form-control" placeholder="Inputs"></textarea>
 						</div>
 						<div className="col-6 p-0 pl-1">
-							<textarea ref="outputs" className="form-control" placeholder="Expected Outputs"></textarea>
+							<textarea ref="outputs" className="form-control" placeholder="Expected Outputs" required></textarea>
 						</div>
 					</div>
 				</div>

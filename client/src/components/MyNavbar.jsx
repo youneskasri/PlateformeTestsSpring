@@ -25,6 +25,7 @@ export default class MyNavbar extends React.Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this.handleClickLogout = this.handleClickLogout.bind(this);
     this.state = {
       isOpen: false
     };
@@ -34,6 +35,10 @@ export default class MyNavbar extends React.Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
+  }
+
+  handleClickLogout() {
+    alert("Logout");
   }
 
   render() {
@@ -57,6 +62,7 @@ export default class MyNavbar extends React.Component {
             	))
             }
           </Nav>
+          <button onClick={this.handleClickLogout} className="btn btn-sm btn-light">Sign out <i className="fas fa-sign-out-alt"></i></button>
         </Collapse>
       </Navbar>
     );

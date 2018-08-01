@@ -77,7 +77,7 @@ class ShowCase extends React.Component {
 	}
 
 	hideExecuteForm = (evt) => {
-		evt.preventDefault();
+		if (evt) evt.preventDefault();
 
 		let showExecuteForm = false;
 		this.setState({ showExecuteForm });
@@ -104,6 +104,7 @@ class ShowCase extends React.Component {
 				let executions = this.state.executions.slice();
 				executions.push(execution);
 				this.setState({ executions });
+				this.hideExecuteForm();
 			})
 			.catch(err => alert(err));
 	}

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Axios from 'axios';
 
+import CKEditor from "react-ckeditor-component";
 
 export default class EditScenario  extends React.Component {
 	
@@ -29,8 +30,8 @@ export default class EditScenario  extends React.Component {
 	}
 
 
-	handleDescriptionChange = () => {
-		let description = this.refs.description.value;
+	handleDescriptionChange = (event) => {
+		let description = event.editor.getData();
 		let { scenario } = this.state;
 		scenario.description = description;
 		this.setState({ scenario });
@@ -40,7 +41,7 @@ export default class EditScenario  extends React.Component {
 		evt.preventDefault();
 
 		let title = this.refs.title.value;
-		let description = this.refs.description.value;
+		let description = this.state.scenario.description;
 		
 		let { idScenario } = this.state.scenario;
 		let { idProject, idPlan } = this.props.match.params;
@@ -76,7 +77,7 @@ export default class EditScenario  extends React.Component {
 										<h3>Edit Scenario N°{idProject}-{idPlan}-{idScenario}</h3>
 									</div>
 									<div className="col-2">
-										<Link to="/projects" className="btn btn-light text-info btn-block"><i className="fas fa-times"></i></Link>									
+										<Link to={`/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases`} className="btn btn-light text-info btn-block"><i className="fas fa-times"></i></Link>									
 									</div>
 								</div>
 							</div>						
@@ -89,7 +90,15 @@ export default class EditScenario  extends React.Component {
 								</div>
 								<div className="pb-3">
 									<label>Test Plan Description</label>
-									<textarea required className="form-control" cols="30" rows="5" ref="description" onChange={this.handleDescriptionChange} value={description}></textarea>
+									<CKEditor 
+				            				ref="ckeditor"
+				            				activeClass="p10" 
+		        		      				content={ description } 
+		              						events={{
+		              							"focus": this.onFocus,
+		                						"change": this.handleDescriptionChange
+              								}}
+		             				/>
 								</div>						
 								<button className="btn btn-info btn-block mb-3">Save</button>		
 							</form>

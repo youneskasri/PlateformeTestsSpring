@@ -10,9 +10,7 @@ export default class EditPlan  extends React.Component {
 	state = {
 		plan: {
 			description: '<i>Click here to show and update the data.. </i>'
-		}, 
-
-		refresh: 1
+		}
 	}	
 	
 	componentWillMount() {
@@ -107,8 +105,6 @@ export default class EditPlan  extends React.Component {
 								</div>
 								<div className="pb-3">
 									<label>Plan description</label>
-									{
-										this.state.refresh > 0 ?
 										<CKEditor 
 				            				ref="ckeditor"
 				            				activeClass="p10" 
@@ -117,8 +113,7 @@ export default class EditPlan  extends React.Component {
 		              							"focus": this.onFocus,
 		                						"change": this.handleDescriptionChange
               								}}
-		             				/>	: ''
-									}
+		             					/>
 				            		
 		             			</div>						
 								<button className="btn btn-info btn-block mb-3">Save</button>		

@@ -8,10 +8,44 @@ import Axios from "axios";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
+var BarChart = require("react-chartjs").Bar;
+
+/*var MyComponent = React.createClass({
+  render: function() {
+    return <BarChart data={chartData} options={chartOptions}/>
+  }
+});
+*/
 
 function deleteScenarioById(idProject, idPlan, idScenario) {
 	return  Axios.delete(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}`)
 		.then(response => response.data);
+}
+
+function calculateChartData(testCases) {
+	
+	let data=[], labels=[];
+
+	testCases.forEach(testCase => {
+		labels.push('N°'+testCase.idTestCase);
+		data.push(testCase.numberOfExecutions);
+	});
+
+	let chartData = {
+		labels: labels,
+		datasets: [
+			{
+				label: "My Second dataset",
+				fillColor: "rgba(151,187,205,0.5)",
+				strokeColor: "rgba(151,187,205,0.8)",
+				highlightFill: "rgba(151,187,205,0.75)",
+				highlightStroke: "rgba(151,187,205,1)",
+				data: data
+			}
+		]
+	};
+
+	return chartData;
 }
 
 class ShowScenario extends React.Component {
@@ -19,7 +53,20 @@ class ShowScenario extends React.Component {
 	state={
 		scenario: {},
 		cases: [],
-		redirection: null
+		redirection: null,
+		chartData: {
+			labels: [],
+			datasets: [
+				{
+					label: "My Second dataset",
+					fillColor: "rgba(151,187,205,0.5)",
+					strokeColor: "rgba(151,187,205,0.8)",
+					highlightFill: "rgba(151,187,205,0.75)",
+					highlightStroke: "rgba(151,187,205,1)",
+					data: []
+				}
+			]
+		}
 	}
 
 	handleDelete = (evt) => {
@@ -71,6 +118,10 @@ class ShowScenario extends React.Component {
 			.then(res => res.data)
 			.then(cases => this.setState({ cases }))
 			.then(() => console.log(this.state.cases))
+			.then(() => {
+				let chartData = calculateChartData(this.state.cases);
+				this.setState({ chartData });
+			})
 			.catch(console.log);
 	}
 
@@ -85,7 +136,7 @@ class ShowScenario extends React.Component {
 
 		let testCases = this.state.cases.map(testCase => 	(
 			<li key={testCase.idTestCase} className="list-group-item">
-				<Link className="text-info" to={`${this.props.match.url}/${testCase.idTestCase}`}>{ testCase.objective }</Link>
+				<Link className="text-info" to={`${this.props.match.url}/${testCase.idTestCase}`}>{ "N°"+testCase.idTestCase + ' - ' + testCase.objective }</Link>
 			</li>
 		));
 
@@ -93,17 +144,9 @@ class ShowScenario extends React.Component {
 		* Tanchof mn ba3d ach ndir f'had Composant 3
 		*/
 		const NoMatch = (props) => (
-			<div className="text-center pt-5 pb-3 text-info border ">
-				<h5>
-					<i className="fas fa-book-open fa-5x"></i>
-				</h5>
-				<hr/>
-				<div className="btn-group">
-					<div className="btn btn-outline-info">Btn 1</div>
-					<div className="btn btn-outline-info">Btn 2</div>
-					<div className="btn btn-outline-info">Btn 3</div>	
-				</div>
-			</div>
+			<BarChart data={this.state.chartData} options={{
+				responsive: true
+			}}/>
 		);
 
 		let dynamicCanvas = (

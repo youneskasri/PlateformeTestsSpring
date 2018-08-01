@@ -1,13 +1,28 @@
 import React from 'react';
 import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
+import CKEditor from "react-ckeditor-component";
+
 
 export default class NewCase extends React.Component {
 
 	state = {
-		testCase: {},
+		testCase: {
+			steps: '<i>Click here to show and update the data.. </i>'
+		},
 		redirection: null,
 		instructions: []
+	}
+
+	handleStepsChange = (event) => {
+		let steps = event.editor.getData();
+		let { testCase } = this.state;
+		testCase.steps = steps;
+		this.setState({ testCase });
+	}
+
+	onFocus = (event) => {
+		event.editor.setData(this.state.testCase.steps);
 	}
 
 	toggleAutomated = (event) => {
@@ -24,7 +39,7 @@ export default class NewCase extends React.Component {
 			.then(testCase => {
 				this.setState({ testCase });
 				this.refs.objective.value = testCase.objective;
-				this.refs.steps.value = testCase.steps;
+				this.state.testCase.steps = testCase.steps;
 				this.refs.inputs.value = testCase.inputs;
 				this.refs.outputs.value = testCase.expectedOutputs;
 			})
@@ -41,7 +56,7 @@ export default class NewCase extends React.Component {
 			// TODO
 			alert('TODO');
 		} else {
-			let steps = this.refs.steps.value;
+			let steps = this.state.testCase.steps;
 			let inputs = this.refs.inputs.value;
 			let expectedOutputs = this.refs.outputs.value;
 
@@ -58,7 +73,7 @@ export default class NewCase extends React.Component {
 					let redirection = (<Redirect to={`/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}`} />);
 					this.setState({ redirection });
 				})
-				.catch(err => alert(err.message));
+				.catch(err => { alert(err.message); console.log(err) });
 		}
 	}
 
@@ -77,7 +92,14 @@ export default class NewCase extends React.Component {
 		let manualTestForm =  (
 			<div>
 				<label>Steps</label>
-				<textarea ref="steps" className="form-control" placeholder="Etapes du test"></textarea>
+				<CKEditor 
+    				activeClass="p10" 
+      				content={this.state.testCase.steps} 
+						events={{
+						"change": this.handleStepsChange,
+						"focus": this.onFocus
+						}}
+ 				/>
 				<div className="mb-3"></div>
 
 				<div className="container-fluid">
