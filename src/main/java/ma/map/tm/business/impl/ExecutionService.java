@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import ma.map.tm.business.IExecutionService;
@@ -13,7 +14,6 @@ import ma.map.tm.dao.CaseRepository;
 import ma.map.tm.dao.ExecutionRepository;
 import ma.map.tm.entities.Case;
 import ma.map.tm.entities.TestExecution;
-import ma.map.tm.entities.dto.CaseDTO;
 import ma.map.tm.entities.dto.TestExecutionDTO;
 import ma.map.tm.web.forms.TestExecutionForm;
 
@@ -36,7 +36,8 @@ public class ExecutionService implements IExecutionService {
 		TestExecution execution = new TestExecution();
 		execution.setTestCase(testCase);
 		
-		List<TestExecution> executions = executionRepository.findAll(Example.of(execution));
+		Sort sortByDateDesc = new Sort(Sort.Direction.DESC, "dateOfExecution");
+		List<TestExecution> executions = executionRepository.findAll(Example.of(execution), sortByDateDesc);
 		
 		List<TestExecutionDTO> executionsDTO = new ArrayList<>();
 		executions.forEach(ex -> {

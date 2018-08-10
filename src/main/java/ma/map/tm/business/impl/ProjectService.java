@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import ma.map.tm.business.IProjectService;
@@ -23,7 +24,8 @@ public class ProjectService implements IProjectService{
 	
 	@Override
 	public List<ProjectDTO> retrieveAllProjects() {
-		Iterable<Project> projects = projectRepository.findAll();
+		Sort sortByDateDesc = new Sort(Sort.Direction.DESC, "startDate");
+		Iterable<Project> projects = projectRepository.findAll(sortByDateDesc);
 		List<ProjectDTO> filteredProjects = new ArrayList<>();
 		projects.forEach(project -> 
 			filteredProjects.add(ProjectDTO.convert(project))

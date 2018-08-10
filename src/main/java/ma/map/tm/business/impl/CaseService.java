@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -35,7 +36,8 @@ public class CaseService implements ICaseService {
 		Case testCase = new Case();
 		testCase.setScenario(scenario);
 		
-		List<Case> cases = caseRepository.findAll(Example.of(testCase));
+		Sort sortByDateDesc = new Sort(Sort.Direction.DESC, "dateOfCreation");
+		List<Case> cases = caseRepository.findAll(Example.of(testCase), sortByDateDesc);
 		
 		final List<CaseDTO> casesDTO = new ArrayList<>();
 		cases.forEach(c -> {

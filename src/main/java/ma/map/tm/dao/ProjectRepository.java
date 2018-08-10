@@ -1,13 +1,11 @@
 package ma.map.tm.dao;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import ma.map.tm.entities.Project;
 
 //@CrossOrigin(allowCredentials = "false")
-public interface ProjectRepository extends CrudRepository<Project, Long> {
+public interface ProjectRepository extends JpaRepository<Project, Long> {
 
 	Project findByTitle(String string);
 
