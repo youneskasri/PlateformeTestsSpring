@@ -1,4 +1,4 @@
-package ma.map.tm.business;
+package ma.map.tm.business.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import ma.map.tm.business.IProjectService;
 import ma.map.tm.dao.ProjectRepository;
 import ma.map.tm.entities.Project;
-import ma.map.tm.entities.ProjectDTO;
-import ma.map.tm.web.ProjectForm;
+import ma.map.tm.entities.dto.ProjectDTO;
+import ma.map.tm.web.forms.ProjectForm;
 
 @Primary
 @Service
@@ -59,6 +60,13 @@ public class ProjectService implements IProjectService{
 		project.setData(data);
 		projectRepository.save(project);
 		return ProjectDTO.convert(project);
+	}
+
+	@Override
+	public Project generateReport(Long idProject) {
+		Optional<Project> opt = projectRepository.findById(idProject);
+		Project project = opt.get();
+		return project;
 	}
 
 }

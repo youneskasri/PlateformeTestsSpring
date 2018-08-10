@@ -2,8 +2,8 @@ package ma.map.tm.business;
 
 import java.util.List;
 
-import ma.map.tm.entities.CaseDTO;
-import ma.map.tm.web.CaseForm;
+import ma.map.tm.entities.dto.CaseDTO;
+import ma.map.tm.web.forms.CaseForm;
 
 public interface ICaseService {
 

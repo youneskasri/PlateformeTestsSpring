@@ -2,8 +2,9 @@ package ma.map.tm.business;
 
 import java.util.List;
 
-import ma.map.tm.entities.ProjectDTO;
-import ma.map.tm.web.ProjectForm;
+import ma.map.tm.entities.Project;
+import ma.map.tm.entities.dto.ProjectDTO;
+import ma.map.tm.web.forms.ProjectForm;
 
 public interface IProjectService {
 	
@@ -16,4 +17,6 @@ public interface IProjectService {
 	Boolean removeProjectById(Long id);
 
 	ProjectDTO updateProject(Long id, ProjectForm data);
+
+	Project generateReport(Long idProject);
 }

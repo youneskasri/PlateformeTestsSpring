@@ -7,10 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ma.map.tm.web.TestExecutionForm;
+import ma.map.tm.web.forms.TestExecutionForm;
 
 @Entity
 @Getter @Setter
@@ -24,6 +26,7 @@ public class TestExecution {
 	private String remarks;
 	private String outputs;
 	
+	@JsonIgnore
 	@ManyToOne
 	private Case testCase;
 

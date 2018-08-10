@@ -1,9 +1,10 @@
-package ma.map.tm.entities;
+package ma.map.tm.entities.dto;
 
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import ma.map.tm.entities.Project;
 
 @Data
 @AllArgsConstructor

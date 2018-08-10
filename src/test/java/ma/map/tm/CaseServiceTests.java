@@ -16,10 +16,10 @@ import ma.map.tm.business.ICaseService;
 import ma.map.tm.dao.CaseRepository;
 import ma.map.tm.dao.ScenarioRepository;
 import ma.map.tm.entities.Case;
-import ma.map.tm.entities.CaseDTO;
 import ma.map.tm.entities.Scenario;
 import ma.map.tm.entities.TestType;
-import ma.map.tm.web.CaseForm;
+import ma.map.tm.entities.dto.CaseDTO;
+import ma.map.tm.web.forms.CaseForm;
 
 
 @RunWith(SpringRunner.class)

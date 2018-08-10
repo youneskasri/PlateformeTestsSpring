@@ -15,9 +15,9 @@ import ma.map.tm.business.IPlanService;
 import ma.map.tm.dao.PlanRepository;
 import ma.map.tm.dao.ProjectRepository;
 import ma.map.tm.entities.Plan;
-import ma.map.tm.entities.PlanDTO;
 import ma.map.tm.entities.Project;
-import ma.map.tm.web.PlanForm;
+import ma.map.tm.entities.dto.PlanDTO;
+import ma.map.tm.web.forms.PlanForm;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

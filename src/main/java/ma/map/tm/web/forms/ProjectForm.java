@@ -1,4 +1,4 @@
-package ma.map.tm.web;
+package ma.map.tm.web.forms;
 
 import java.util.Date;
 

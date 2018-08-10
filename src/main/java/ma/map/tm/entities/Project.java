@@ -11,10 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ma.map.tm.web.ProjectForm;
+import ma.map.tm.web.forms.ProjectForm;
 
 @Entity
 @Getter @Setter
@@ -30,6 +32,7 @@ public class Project {
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="project")
 	private List<Plan> testPlans = new ArrayList<>();
 	
+	@JsonIgnore
 	@ManyToOne
 	private Tester author;
 	

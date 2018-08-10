@@ -10,11 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ma.map.tm.web.ScenarioForm;
+import ma.map.tm.web.forms.ScenarioForm;
 
 @Entity
 @Getter @Setter
@@ -29,6 +31,7 @@ public class Scenario {
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="scenario")
 	private List<Case> testCases = new ArrayList<>();
 	
+	@JsonIgnore
 	@ManyToOne
 	private Plan plan;
 

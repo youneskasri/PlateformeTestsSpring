@@ -26,9 +26,12 @@ const Project = (props) => (
     </div>
     <div className="card-body">
       { HtmlParser(props.project.description || '') }
-      {
-      	props.showLink ? <Link className="float-right" to={'/projects/'+props.project.idProject}> Show</Link> : ''
-      }
+      <div className="float-right">        
+        {
+          props.showLink ? <Link to={'/projects/'+props.project.idProject}> Show</Link> 
+          : <Link to={'/projects/'+props.project.idProject+'/report'}>Generate Report</Link>
+        }
+      </div>
     </div>
   </div>
 ); 

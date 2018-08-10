@@ -21,10 +21,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import ma.map.tm.business.ProjectService;
+import ma.map.tm.business.impl.ProjectService;
 import ma.map.tm.entities.Project;
-import ma.map.tm.entities.ProjectDTO;
-import ma.map.tm.web.ProjectController;
+import ma.map.tm.entities.dto.ProjectDTO;
+import ma.map.tm.web.controllers.ProjectController;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ProjectController.class)

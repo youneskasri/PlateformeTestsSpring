@@ -15,8 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ma.map.tm.business.IProjectService;
 import ma.map.tm.dao.ProjectRepository;
 import ma.map.tm.entities.Project;
-import ma.map.tm.entities.ProjectDTO;
-import ma.map.tm.web.ProjectForm;
+import ma.map.tm.entities.dto.ProjectDTO;
+import ma.map.tm.web.forms.ProjectForm;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -10,10 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ma.map.tm.web.CaseForm;
+import ma.map.tm.web.forms.CaseForm;
 
 @Entity
 @Getter @Setter
@@ -32,6 +34,7 @@ public class Case {
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="testCase")
 	List<TestExecution> executions;
 	
+	@JsonIgnore
 	@ManyToOne
 	private Scenario scenario;
 
