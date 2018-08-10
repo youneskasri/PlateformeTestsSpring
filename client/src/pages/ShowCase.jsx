@@ -9,9 +9,11 @@ import Execution from "../components/Execution";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
+const formatDate = require("../format-date");
+const BASE_URL = require("../params").serverBaseUrl;
 
 function deleteCaseById(idProject, idPlan, idScenario, idCase) {
-	return  Axios.delete(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}`)
+	return  Axios.delete(`${BASE_URL}/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}`)
 		.then(response => response.data);
 }
 
@@ -97,7 +99,7 @@ class ShowCase extends React.Component {
 
 
 		Axios.post(
-			`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}/executions`,
+			`${BASE_URL}/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}/executions`,
 			{ outputs, status, remarks}
 			).then(res => res.data)
 			.then(execution => {
@@ -170,7 +172,8 @@ class ShowCase extends React.Component {
 				
 				{/* TODO */}
 				<a  href="#" onClick={() => this.handleClickOnExecution(execution.idTestExecution)} className="text-info" >
-					{ execution.dateOfExecution }  
+					{ 'N°'+execution.idTestExecution+' - le '}
+					{ formatDate(execution.dateOfExecution, "Do MMMM YYYY à HH:mm:s") }  
 					{ execution.status === true ? <span className="text-success font-weight-bold float-right">OK</span> 
 						: <span className="text-danger font-weight-bold float-right">NOT OK</span>}
 				</a>

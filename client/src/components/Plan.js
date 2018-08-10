@@ -3,9 +3,11 @@ import { Link, withRouter } from "react-router-dom";
 import Axios from "axios";
 import HtmlParser from 'html-react-parser';
 
+const BASE_URL = require("../params").serverBaseUrl;
+
 function retrieveTestPlan(idProject, idPlan){
 	console.log("Requesst !!")
-	return Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}`)
+	return Axios.get(`${BASE_URL}/projects/${idProject}/plans/${idPlan}`)
 		.then(response => response.data);
 }
 

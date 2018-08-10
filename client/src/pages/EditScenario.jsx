@@ -4,6 +4,8 @@ import Axios from 'axios';
 
 import CKEditor from "react-ckeditor-component";
 
+const BASE_URL = require("../params").serverBaseUrl;
+
 export default class EditScenario  extends React.Component {
 	
 	state = {
@@ -21,7 +23,7 @@ export default class EditScenario  extends React.Component {
 
 		let { idProject, idPlan, idScenario } = this.props.match.params;
 
-		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}`)
+		Axios.get(`${BASE_URL}/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}`)
 		.then(res => res.data)
 		.then(scenario => {
 			this.setState({ scenario });
@@ -46,7 +48,7 @@ export default class EditScenario  extends React.Component {
 		let { idScenario } = this.state.scenario;
 		let { idProject, idPlan } = this.props.match.params;
 
-		let url = `http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}`;
+		let url = `${BASE_URL}/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}`;
 
 		Axios.post(url, { title, description })
 		.then(res => res.data)

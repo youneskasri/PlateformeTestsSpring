@@ -26,7 +26,11 @@ export default () => (
 				</div>
 			</div>
 			<div className="row mt-3">
-				<Link to="/projects" className="btn btn-info mx-auto mt-5 btn-lg">Start now !</Link>
+			{
+				sessionStorage.getItem("token") ?
+					<Link to="/projects" className="btn btn-info mx-auto mt-5 btn-lg">Start now</Link>	
+					: <Link to="/login" className="btn btn-info mx-auto mt-5 btn-lg">Start now !</Link>
+			}
 			</div>
 		</div>
 	);	

@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import HtmlParser from 'html-react-parser';
 
+const formatDate = require("../format-date");
+
 const Project = (props) => (
   <div className="card mb-3">
     <div className="card-header">
@@ -10,8 +12,8 @@ const Project = (props) => (
           <Link className="text-info" to={'/projects/'+props.project.idProject}>
             {props.project.title}
           </Link> by {props.project.authorFullName} from 
-          <span className="text-info"> {props.project.startDate} </span>
-          to <span className="text-info">{props.project.endDate}</span>
+          <span className="text-info"> { formatDate(props.project.startDate) } </span>
+          to <span className="text-info">{ formatDate(props.project.endDate) }</span>
         </div>
     		{
     			props.returnButton ? 

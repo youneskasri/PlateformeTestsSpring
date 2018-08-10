@@ -8,6 +8,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import CKEditor from "react-ckeditor-component";
 
+const formatDate = require("../format-date"); // To set LANG = FR for moment()
+
+const BASE_URL = require("../params").serverBaseUrl;
+
 export default class EditProject  extends React.Component {
 	state = {
 		project: {
@@ -23,7 +27,7 @@ export default class EditProject  extends React.Component {
 
 	componentWillMount() {
 
-		Axios.get('http://localhost:8080/projects/'+this.props.match.params.idProject)
+		Axios.get(`${BASE_URL}/projects/${this.props.match.params.idProject}`)
 		.then(res => res.data)
 		.then(project => {
 			this.setState({ project });
@@ -60,7 +64,7 @@ export default class EditProject  extends React.Component {
 		
 		let { idProject, startDate, endDate } = this.state.project;
 
-		let url = 'http://localhost:8080/projects/'+idProject;
+		let url = `${BASE_URL}/projects/${idProject}`;
 
 		console.log("sending request to ", url, { title, description, startDate, endDate });
 
@@ -79,7 +83,7 @@ export default class EditProject  extends React.Component {
 
 	render(){
 
-		let { startDate, endDate, title, description } = this.state.project;
+		let { startDate, endDate, title, description, idProject} = this.state.project;
 		return (
 			<div className="container-fluid pt-4">
 				<div className="row mt-3">
@@ -91,7 +95,7 @@ export default class EditProject  extends React.Component {
 										<h3>Project Title</h3>
 									</div>
 									<div className="col-2">
-										<Link to="/projects" className="btn btn-light text-info btn-block"><i className="fas fa-times"></i></Link>									
+										<Link to={"/projects/"+idProject} className="btn btn-light text-info btn-block"><i className="fas fa-times"></i></Link>									
 									</div>
 								</div>
 							</div>						

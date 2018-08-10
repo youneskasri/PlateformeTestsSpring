@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
 import CKEditor from "react-ckeditor-component";
 
+const BASE_URL = require("../params").serverBaseUrl;
 
 export default class NewCase extends React.Component {
 
@@ -34,7 +35,7 @@ export default class NewCase extends React.Component {
 
 	componentDidMount() {
 		let { idProject, idPlan, idScenario, idCase } = this.props.match.params;
-		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}`)
+		Axios.get(`${BASE_URL}/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}`)
 			.then(res => res.data)
 			.then(testCase => {
 				this.setState({ testCase });
@@ -66,7 +67,7 @@ export default class NewCase extends React.Component {
 
 			console.log(automated, inputs, expectedOutputs, steps);
 
-			Axios.post(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}`, { objective, automated, inputs, expectedOutputs, steps } )
+			Axios.post(`${BASE_URL}/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}`, { objective, automated, inputs, expectedOutputs, steps } )
 				.then(res => res.data)
 				.then(res => {
 					console.log(res);
@@ -110,7 +111,7 @@ export default class NewCase extends React.Component {
 						</div>
 						<div className="col-6 p-0 pl-1">
 							<label>Expected outputs</label>
-							<textarea ref="outputs" className="form-control" placeholder="Expected Outputs"></textarea>
+							<textarea ref="outputs" className="form-control" placeholder="Expected Outputs" required></textarea>
 						</div>
 					</div>
 				</div>

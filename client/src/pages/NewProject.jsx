@@ -8,6 +8,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import CKEditor from "react-ckeditor-component";
 
+const formatDate = require("../format-date"); // To set LANG = FR for moment()
+
+const BASE_URL = require("../params").serverBaseUrl;
+
 export default class NewProject  extends React.Component {
 	state = {
 		startDate: moment(),
@@ -37,7 +41,7 @@ export default class NewProject  extends React.Component {
 		let startDate = this.state.startDate;
 		let endDate = this.state.endDate;
 
-		Axios.post('http://localhost:8080/projects', { title, description, startDate, endDate })
+		Axios.post(`${BASE_URL}/projects`, { title, description, startDate, endDate })
 		.then(res => res.data)
 		.then(project => {
 			let redirection = (

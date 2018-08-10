@@ -4,6 +4,8 @@ import Axios from "axios";
 
 import CKEditor from "react-ckeditor-component";
 
+const BASE_URL = require("../params").serverBaseUrl;
+
 export default class NewScenario extends React.Component {
 
 	state = {
@@ -22,7 +24,7 @@ export default class NewScenario extends React.Component {
 
 		let { idProject, idPlan } = this.props.match.params;
 		
-		Axios.post(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios`, { title, description })
+		Axios.post(`${BASE_URL}/${idProject}/plans/${idPlan}/scenarios`, { title, description })
 			.then(res => res.data)
 			.then(scenario => {
 				console.log("Saved Scenario", scenario);

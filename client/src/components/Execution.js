@@ -1,5 +1,7 @@
 import React from "react";
 
+const formatDate = require("../format-date");
+
 const Execution = (props) => {
 
 
@@ -9,7 +11,7 @@ const Execution = (props) => {
 
 		<div className="card">
 			<div className="card-header">
-				Execution N°{idTestExecution} At { dateOfExecution }
+				Execution N°{idTestExecution} le { formatDate(dateOfExecution, "Do MMMM YYYY à HH:mm:s") }
 				<a href="#" onClick={props.handleClose} className="float-right"><i class="far fa-times-circle"></i></a>
 			</div>
 			<div className="card-body">

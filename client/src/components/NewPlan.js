@@ -5,6 +5,8 @@ import Axios from "axios";
 
 import CKEditor from "react-ckeditor-component";
 
+const BASE_URL = require("../params").serverBaseUrl;
+
 export default class NewPlan extends React.Component {
 
 	state = {
@@ -18,7 +20,7 @@ export default class NewPlan extends React.Component {
 		let description = this.state.description;
 		let idProject = this.props.match.params.idProject;
 
-		Axios.post(`http://localhost:8080/projects/${idProject}/plans`, {title, description})
+		Axios.post(`${BASE_URL}/projects/${idProject}/plans`, {title, description})
 			.then(res => res.data)
 			.then(plan => {
 				if(plan) {

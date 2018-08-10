@@ -3,10 +3,12 @@ import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
 import CKEditor from "react-ckeditor-component";
 
+const BASE_URL = require("../params").serverBaseUrl;
+
 export default class NewCase extends React.Component {
 
 	state = {
-		automated: true,
+		automated: false,
 		redirection: null,
 		steps: '<i>Etapes du test ...</i>'
 	}
@@ -39,7 +41,7 @@ export default class NewCase extends React.Component {
 
 			console.log(automated, inputs, expectedOutputs, steps);
 
-			Axios.post(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases`, { objective, automated, inputs, expectedOutputs, steps } )
+			Axios.post(`${BASE_URL}/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases`, { objective, automated, inputs, expectedOutputs, steps } )
 				.then(res => res.data)
 				.then(testCase => {
 					console.log(testCase);

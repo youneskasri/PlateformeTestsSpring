@@ -7,27 +7,27 @@ import NewPlan from "../components/NewPlan";
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
-
+const BASE_URL = require("../params").serverBaseUrl;
 
 function retrieveTestPlansByProjectId(idProject){
-	return Axios.get(`http://localhost:8080/projects/${idProject}/plans`)
+	return Axios.get(`${BASE_URL}/projects/${idProject}/plans`)
 		.then(response => response.data);
 }
 
 function retrieveTestPlan(idProject, idPlan){
 	console.log("Requesst !!")
-	return Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}`)
+	return Axios.get(`${BASE_URL}/projects/${idProject}/plans/${idPlan}`)
 		.then(response => response.data);
 }
 
 
 function retrieveProjectById(id) {
-  return  Axios.get('http://localhost:8080/projects/'+id)
+  return  Axios.get(`${BASE_URL}/projects/${id}`)
 		.then(response => response.data);
 }
 
 function deleteProjectById(id) {
-	return  Axios.delete('http://localhost:8080/projects/'+id)
+	return  Axios.delete(`${BASE_URL}/projects/${id}`)
 		.then(response => response.data);
 }
 

@@ -10,6 +10,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 var BarChart = require("react-chartjs").Bar;
 
+const BASE_URL = require("../params").serverBaseUrl;
 /*var MyComponent = React.createClass({
   render: function() {
     return <BarChart data={chartData} options={chartOptions}/>
@@ -18,7 +19,7 @@ var BarChart = require("react-chartjs").Bar;
 */
 
 function deleteScenarioById(idProject, idPlan, idScenario) {
-	return  Axios.delete(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}`)
+	return  Axios.delete(`${BASE_URL}/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}`)
 		.then(response => response.data);
 }
 
@@ -109,12 +110,12 @@ class ShowScenario extends React.Component {
 
 	componentDidMount() {
 		let { idProject, idPlan, idScenario } = this.props.match.params;
-		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}`)
+		Axios.get(`${BASE_URL}/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}`)
 			.then(res => res.data)
 			.then(scenario => this.setState({ scenario }));
 
 
-		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases`)
+		Axios.get(`${BASE_URL}/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases`)
 			.then(res => res.data)
 			.then(cases => this.setState({ cases }))
 			.then(() => console.log(this.state.cases))

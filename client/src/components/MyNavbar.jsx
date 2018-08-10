@@ -27,7 +27,8 @@ export default class MyNavbar extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.handleClickLogout = this.handleClickLogout.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      refresh: 1
     };
   }
 
@@ -39,6 +40,9 @@ export default class MyNavbar extends React.Component {
 
   handleClickLogout() {
     alert("Logout");
+    sessionStorage.removeItem("token");
+
+    this.setState({ refresh: this.state.refresh + 1});
   }
 
   render() {
@@ -62,7 +66,11 @@ export default class MyNavbar extends React.Component {
             	))
             }
           </Nav>
-          <button onClick={this.handleClickLogout} className="btn btn-sm btn-light">Sign out <i className="fas fa-sign-out-alt"></i></button>
+          {
+            sessionStorage.getItem("token") ?
+              <button onClick={this.handleClickLogout} className="btn btn-sm btn-light">Sign out <i className="fas fa-sign-out-alt"></i></button>
+              :''
+          }          
         </Collapse>
       </Navbar>
     );

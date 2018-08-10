@@ -4,9 +4,10 @@ import { Link } from   'react-router-dom';
 import Project from "../components/Project";
 import ProjectList from "../components/ProjectList";
 
-function retrieveAllProjects() {
+const BASE_URL = require("../params").serverBaseUrl;
 
-  return  axios.get('http://localhost:8080/projects')
+function retrieveAllProjects() {
+  return  axios.get(`${BASE_URL}/projects`)
 		.then(response => response.data)
 }
 
@@ -29,10 +30,10 @@ export default class Projects extends React.Component {
 
 	filterByKeywords = (event) => {
 
-		let keywords = event.target.value;
+		let keywords = event.target.value.toLowerCase();
 
 		retrieveAllProjects()
-			.then(projects => projects.filter(p => p.title.includes(keywords)) )
+			.then(projects => projects.filter(p => p.title.toLowerCase().includes(keywords)) )
 			.then(filteredProjects => this.setState({ projects: filteredProjects }) )
 	  		.catch(console.log);
 	}

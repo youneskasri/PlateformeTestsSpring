@@ -36,8 +36,8 @@ public class CaseService implements ICaseService {
 		Case testCase = new Case();
 		testCase.setScenario(scenario);
 		
-		Sort sortByDateDesc = new Sort(Sort.Direction.DESC, "dateOfCreation");
-		List<Case> cases = caseRepository.findAll(Example.of(testCase), sortByDateDesc);
+		//Sort sortByDateDesc = new Sort(Sort.Direction.DESC, "dateOfCreation");
+		List<Case> cases = caseRepository.findAll(Example.of(testCase));
 		
 		final List<CaseDTO> casesDTO = new ArrayList<>();
 		cases.forEach(c -> {

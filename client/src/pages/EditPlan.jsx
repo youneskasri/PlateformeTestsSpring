@@ -4,6 +4,7 @@ import Axios from 'axios';
 
 import CKEditor from "react-ckeditor-component";
 
+const BASE_URL = require("../params").serverBaseUrl;
 
 export default class EditPlan  extends React.Component {
 	
@@ -17,7 +18,7 @@ export default class EditPlan  extends React.Component {
 
 		let { idProject, idPlan } = this.props.match.params;
 
-		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}`)
+		Axios.get(`${BASE_URL}/projects/${idProject}/plans/${idPlan}`)
 		.then(res => res.data)
 		.then(plan => {
 			console.log("I made a request");
@@ -59,7 +60,7 @@ export default class EditPlan  extends React.Component {
 		let { idPlan } = this.state.plan;
 		let { idProject } = this.props.match.params;
 
-		let url = `http://localhost:8080/projects/${idProject}/plans/${idPlan}`;
+		let url = `${BASE_URL}/projects/${idProject}/plans/${idPlan}`;
 
 		Axios.post(url, { title, description })
 		.then(res => res.data)
