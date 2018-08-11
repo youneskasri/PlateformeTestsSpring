@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.assertj.core.util.Arrays;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import ma.map.tm.business.IProjectService;
-import ma.map.tm.entities.Project;
 import ma.map.tm.entities.dto.ProjectDTO;
+import ma.map.tm.entities.dto.ProjectReportDTO;
 import ma.map.tm.web.forms.ProjectForm;
 
 
@@ -50,7 +48,7 @@ public class ProjectServiceForTests implements IProjectService {
 	}
 
 	@Override
-	public Project generateReport(Long idProject) {
+	public ProjectReportDTO generateReport(Long idProject) {
 		// TODO Auto-generated method stub
 		return null;
 	}

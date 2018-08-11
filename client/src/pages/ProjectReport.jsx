@@ -102,10 +102,10 @@ class CasTest extends React.Component {
 
 		let caseStatus;
 		if (testCase.executions.length === 0) {
-			caseStatus = <span style={{ color: CASE_NOT_EXECUTED_COLOR }} className="pl-2"> <i class="fas fa-minus"></i> Not Executed</span>
+			caseStatus = <span style={{ color: CASE_NOT_EXECUTED_COLOR }} className="pl-2"> <i className="fas fa-minus"></i> Not Executed</span>
 		} else {
 			if (testCase.executions[0].status === true) {
-				caseStatus = <span style={{ color: CASE_OK_COLOR }} className="pl-2"> <i class="fas fa-check"></i> OK</span>
+				caseStatus = <span style={{ color: CASE_OK_COLOR }} className="pl-2"> <i className="fas fa-check"></i> OK</span>
 			} else {
 				caseStatus = <span style={{ color: CASE_NOT_OK_COLOR }} className="pl-2"> <i className="fas fa-times"></i> NOT OK</span>
 			}
@@ -208,11 +208,12 @@ class ProjectReport extends React.Component {
 		project: {},
 		report: {
 			projectTitle: '',
-			pieChartData: {
+			projectDescription: '',
+			/* Pie Chart Data */	
 				nbOfCasesOK: 0,
 				nbOfCasesNotOK: 0,
-				nbOfCasesTotal: 0
-			},
+				nbOfCasesNotExecuted: 0,
+			nbOfCasesTotal: 0,
 			plans: [{
 				idPlan: 0,
 				title: 'Plan title',
@@ -220,16 +221,16 @@ class ProjectReport extends React.Component {
 					idScenario: 0,
 					title: 'Scenario title',
 					cases: [{
-						idCase: 0,
+						idTestCase: 0,
 						objective: 'Objectif du Test',
 						steps: '<ul><li>1</li><li>2</li></ul>',
 						inputs: '',
 						expectedOutputs: '',
 						executions: [{
-							id: 1,
-							date: moment(),
-							output: '',
-							valid: false
+							idTestExecution : 1,
+							dateOfExecution: moment(),
+							outputs: '',
+							status: false
 						}]
 					}]
 				}]
@@ -241,8 +242,7 @@ class ProjectReport extends React.Component {
 		let { idProject } = this.props.match.params;
 		Axios.get(`${BASE_URL}/projects/${idProject}/report`)
 			.then(res => res.data)
-			.then(project => this.setState({ project }))
-			.then(() => this.calculateReport())
+			.then(report => this.setState({ report }))
 			.catch(err => {
 				console.log(err);
 				alert(err.message);
@@ -250,52 +250,6 @@ class ProjectReport extends React.Component {
 	}
 
 
-	calculatePieChartData = () => {
-
-		let plans = this.state.project.testPlans;
-
-		if (!plans )
-			return console.log("No data for this project");
-
-		let nbOfCasesOK = 0, nbOfCasesNotOK = 0, nbOfCasesTotal = 0;
-
-		plans.forEach(plan => {
-			plan.scenarios.forEach(scenario => {
-				nbOfCasesTotal += scenario.testCases.length;
-				scenario.testCases.forEach(testCase => {
-					let lastExecution = testCase.executions[0];
-					if (lastExecution){
-						lastExecution.status === true ? nbOfCasesOK++ : nbOfCasesNotOK++;
-					}
-				});
-			});
-		});
-
-		let nbOfCasesNotExecuted = nbOfCasesTotal - (nbOfCasesOK + nbOfCasesNotOK);
-		
-		return {
-			nbOfCasesOK, nbOfCasesNotOK, nbOfCasesNotExecuted, nbOfCasesTotal
-		};
-	}
-
-	calculateReport = () => {
-
-		let { project, report } = this.state;
-		let plans = project.testPlans;
-
-		console.log(project);
-		if (!project) return console.log('still waiting for data');
-
-		/* Plans data */ 
-		report.projectTitle = project.title;
-		if (plans) {
-			report.plans = plans.slice();
-			
-			report.pieChartData = this.calculatePieChartData();
-		}
-		
-		this.setState({ report });
-	}
 
 	render ()  {
 
@@ -303,19 +257,19 @@ class ProjectReport extends React.Component {
 
 		let pieChartData = [
             {
-                value: report.pieChartData.nbOfCasesNotOK,
+                value: report.nbOfCasesNotOK,
                 color:CASE_NOT_OK_COLOR,
                 highlight: "#FF5A5E",
                 label: "Red"
             },
             {
-                value: report.pieChartData.nbOfCasesOK,
+                value: report.nbOfCasesOK,
                 color: CASE_OK_COLOR,
                 highlight: "#5AD3D1",
                 label: "Green"
             },
             {
-                value: report.pieChartData.nbOfCasesNotExecuted,
+                value: report.nbOfCasesNotExecuted,
                 color: CASE_NOT_EXECUTED_COLOR,
                 highlight: "#FFC870",
                 label: "Yellow"
@@ -325,7 +279,7 @@ class ProjectReport extends React.Component {
 		return (
 			<div className="container mt-5">
 				<h1 className="">Rapport de Test Logiciel</h1>
-				<h3 className="text-info">{ new Date().toString() }</h3>
+				<h3 className="text-info">Fait le { formatDate(moment(), 'Do MMM YYYY à HH:mm') }</h3>
 				<hr/>
 				<h2>Project : <span className="text-info">{ report.projectTitle }</span></h2>
 				<hr/>
@@ -338,11 +292,11 @@ class ProjectReport extends React.Component {
 					            position: "bottom"
 					        }
 						}}/>
-						<div className="pb-2">Nombre de tests effectués pour ce projet = <span className="border rounded p-1">{ report.pieChartData.nbOfCasesTotal }</span></div>
+						<div className="pb-2">Nombre de tests effectués pour ce projet = <span className="border rounded p-1">{ report.nbOfCasesTotal }</span></div>
 						<div>
-							<span style={{ backgroundColor: CASE_NOT_EXECUTED_COLOR }} className="p-1 rounded">{ report.pieChartData.nbOfCasesNotExecuted }</span> Not Tested - 
-							<span style={{ backgroundColor: CASE_OK_COLOR }} className="p-1 rounded">{ report.pieChartData.nbOfCasesOK }</span> OK -
-							<span style={{ backgroundColor: CASE_NOT_OK_COLOR }} className="text-light p-1 rounded">{ report.pieChartData.nbOfCasesNotOK }</span> NOT OK 
+							<span style={{ backgroundColor: CASE_NOT_EXECUTED_COLOR }} className="p-1 rounded">{ report.nbOfCasesNotExecuted }</span> Not Tested - 
+							<span style={{ backgroundColor: CASE_OK_COLOR }} className="p-1 rounded">{ report.nbOfCasesOK }</span> OK -
+							<span style={{ backgroundColor: CASE_NOT_OK_COLOR }} className="text-light p-1 rounded">{ report.nbOfCasesNotOK }</span> NOT OK 
 						</div>						
 					</div>	
 					<div className="col-md-6"></div>

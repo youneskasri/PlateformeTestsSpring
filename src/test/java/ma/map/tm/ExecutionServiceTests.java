@@ -16,7 +16,7 @@ import lombok.var;
 import ma.map.tm.business.IExecutionService;
 import ma.map.tm.dao.CaseRepository;
 import ma.map.tm.dao.ExecutionRepository;
-import ma.map.tm.entities.Case;
+import ma.map.tm.entities.TestCase;
 import ma.map.tm.entities.TestExecution;
 import ma.map.tm.entities.dto.TestExecutionDTO;
 import ma.map.tm.web.forms.TestExecutionForm;
@@ -49,7 +49,7 @@ public class ExecutionServiceTests {
 		@Test
 		public void createExecution() {
 		
-			Case testCase = caseRepository.save(new Case());
+			TestCase testCase = caseRepository.save(new TestCase());
 		
 			
 			String outputs="output", remarks="No remarks";
@@ -72,7 +72,7 @@ public class ExecutionServiceTests {
 		@Test
 		public void retrieveExecutionById() {
 
-			Case testCase = caseRepository.save(new Case());
+			TestCase testCase = caseRepository.save(new TestCase());
 			
 			String outputs="output", remarks="No remarks";
 			Boolean status = true;
@@ -99,7 +99,7 @@ public class ExecutionServiceTests {
 		public void retrieveAllExecution() {
 			
 			
-			Case testCase = caseRepository.save(new Case());
+			TestCase testCase = caseRepository.save(new TestCase());
 			
 			String outputs="output", remarks="No remarks";
 			Boolean status = true;

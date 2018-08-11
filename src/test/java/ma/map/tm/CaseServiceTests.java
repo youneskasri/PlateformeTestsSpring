@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ma.map.tm.business.ICaseService;
 import ma.map.tm.dao.CaseRepository;
 import ma.map.tm.dao.ScenarioRepository;
-import ma.map.tm.entities.Case;
+import ma.map.tm.entities.TestCase;
 import ma.map.tm.entities.Scenario;
 import ma.map.tm.entities.TestType;
 import ma.map.tm.entities.dto.CaseDTO;
@@ -89,7 +89,7 @@ public class CaseServiceTests {
 		String objective = "Test Case Objective";
 		Date date = new Date();
 		Boolean automated = true;
-		Case testCase = new Case();
+		TestCase testCase = new TestCase();
 		testCase.setObjective(objective);
 		testCase.setDateOfCreation(date);
 		testCase.setType(TestType.AUTOMATED_TEST);
@@ -106,7 +106,7 @@ public class CaseServiceTests {
 
 	@Test
 	public void removeCaseById() {
-		Case testCase = caseRepository.save(new Case());
+		TestCase testCase = caseRepository.save(new TestCase());
 		
 		assertThat(testCase.getIdTestCase()).isNotNull();
 		
@@ -123,7 +123,7 @@ public class CaseServiceTests {
 		Date date = new Date();
 		Boolean automated = false;
 		
-		Case testCase = new Case();
+		TestCase testCase = new TestCase();
 		testCase.setData(new CaseForm(objective, date, automated, "","",""));
 		testCase = caseRepository.save(testCase);
 		

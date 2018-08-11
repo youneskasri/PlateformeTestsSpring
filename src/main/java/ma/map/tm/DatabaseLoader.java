@@ -3,6 +3,7 @@ package ma.map.tm;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -10,13 +11,13 @@ import ma.map.tm.dao.CaseRepository;
 import ma.map.tm.dao.PlanRepository;
 import ma.map.tm.dao.ProjectRepository;
 import ma.map.tm.dao.ScenarioRepository;
-import ma.map.tm.entities.Case;
+import ma.map.tm.entities.TestCase;
 import ma.map.tm.entities.Plan;
 import ma.map.tm.entities.Project;
 import ma.map.tm.entities.Scenario;
 import ma.map.tm.entities.TestType;
 
-@Component
+//@Component
 public class DatabaseLoader implements CommandLineRunner {
 
 	private final ProjectRepository repository;
@@ -47,19 +48,23 @@ public class DatabaseLoader implements CommandLineRunner {
 		Plan p = new Plan();
 		p.setProject(p1);
 		p.setTitle("Plan 1");
+	
 		
 		p = planRepository.save(p);
 		
 		Scenario sc = new Scenario();
 		sc.setPlan(p);
 		sc.setTitle("Scenario 1");
+	
 		
 		sc =scenarioRepository.save(sc);
 		
-		Case testCase = new Case();
+		TestCase testCase = new TestCase();
 		testCase.setScenario(sc);
 		testCase.setObjective("OBjective");
 		testCase.setType(TestType.MANUAL_TEST);
+		testCase.setExpectedOutputs("123");
+		testCase.setSteps("<h4>Holà</h4>");
 		
 		testCase = caseRepository.save(testCase);
 	}

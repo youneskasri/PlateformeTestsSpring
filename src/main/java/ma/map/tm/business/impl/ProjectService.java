@@ -13,6 +13,7 @@ import ma.map.tm.business.IProjectService;
 import ma.map.tm.dao.ProjectRepository;
 import ma.map.tm.entities.Project;
 import ma.map.tm.entities.dto.ProjectDTO;
+import ma.map.tm.entities.dto.ProjectReportDTO;
 import ma.map.tm.web.forms.ProjectForm;
 
 @Primary
@@ -65,10 +66,10 @@ public class ProjectService implements IProjectService{
 	}
 
 	@Override
-	public Project generateReport(Long idProject) {
+	public ProjectReportDTO generateReport(Long idProject) {
 		Optional<Project> opt = projectRepository.findById(idProject);
 		Project project = opt.get();
-		return project;
+		return new ProjectReportDTO(project);
 	}
 
 }

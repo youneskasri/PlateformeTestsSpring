@@ -5,11 +5,14 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,9 +27,12 @@ import ma.map.tm.web.forms.ProjectForm;
 public class Project {
 	
 	private @Id @GeneratedValue Long idProject;
-	private String title;
+	private @NotBlank String title;
+	
+	@Column(columnDefinition="TEXT")
 	private String description;
-	private Date startDate;
+	
+	private @NotNull Date startDate;
 	private Date endDate;
 
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="project")

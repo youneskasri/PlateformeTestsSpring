@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import ma.map.tm.business.ICaseService;
 import ma.map.tm.dao.CaseRepository;
 import ma.map.tm.dao.ScenarioRepository;
-import ma.map.tm.entities.Case;
+import ma.map.tm.entities.TestCase;
 import ma.map.tm.entities.Scenario;
 import ma.map.tm.entities.dto.CaseDTO;
 import ma.map.tm.web.forms.CaseForm;
@@ -33,11 +33,11 @@ public class CaseService implements ICaseService {
 		Optional<Scenario> opt = scenarioRepository.findById(idScenario);
 		Scenario scenario = opt.get();
 		
-		Case testCase = new Case();
+		TestCase testCase = new TestCase();
 		testCase.setScenario(scenario);
 		
 		//Sort sortByDateDesc = new Sort(Sort.Direction.DESC, "dateOfCreation");
-		List<Case> cases = caseRepository.findAll(Example.of(testCase));
+		List<TestCase> cases = caseRepository.findAll(Example.of(testCase));
 		
 		final List<CaseDTO> casesDTO = new ArrayList<>();
 		cases.forEach(c -> {
@@ -52,7 +52,7 @@ public class CaseService implements ICaseService {
 		Optional<Scenario> opt = scenarioRepository.findById(idScenario);
 		Scenario scenario = opt.get();
 		
-		Case testCase = CaseForm.extract(data);
+		TestCase testCase = CaseForm.extract(data);
 		testCase.setScenario(scenario);
 		
 		testCase = caseRepository.save(testCase);
@@ -61,14 +61,14 @@ public class CaseService implements ICaseService {
 
 	@Override
 	public CaseDTO retrieveCaseById(Long idCase) {
-		Optional<Case> opt = caseRepository.findById(idCase);
+		Optional<TestCase> opt = caseRepository.findById(idCase);
 		return CaseDTO.convert(opt.get());
 	}
 
 	@Override
 	public CaseDTO updateCase(Long idCase, @RequestBody CaseForm data) {
-		Optional<Case> opt = caseRepository.findById(idCase);
-		Case testCase = opt.get();
+		Optional<TestCase> opt = caseRepository.findById(idCase);
+		TestCase testCase = opt.get();
 		testCase.setData(data);
 		
 		testCase = caseRepository.save(testCase);

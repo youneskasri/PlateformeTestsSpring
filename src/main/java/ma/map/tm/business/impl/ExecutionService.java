@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import ma.map.tm.business.IExecutionService;
 import ma.map.tm.dao.CaseRepository;
 import ma.map.tm.dao.ExecutionRepository;
-import ma.map.tm.entities.Case;
+import ma.map.tm.entities.TestCase;
 import ma.map.tm.entities.TestExecution;
 import ma.map.tm.entities.dto.TestExecutionDTO;
 import ma.map.tm.web.forms.TestExecutionForm;
@@ -30,8 +30,8 @@ public class ExecutionService implements IExecutionService {
 	
 	@Override
 	public List<TestExecutionDTO> retrieveAllExecutions(Long idCase) {
-		Optional<Case> opt = caseRepository.findById(idCase);
-		Case testCase = opt.get();
+		Optional<TestCase> opt = caseRepository.findById(idCase);
+		TestCase testCase = opt.get();
 		
 		TestExecution execution = new TestExecution();
 		execution.setTestCase(testCase);
@@ -49,8 +49,8 @@ public class ExecutionService implements IExecutionService {
 
 	@Override
 	public TestExecutionDTO createExecution(Long idCase, TestExecutionForm data) {
-		Optional<Case> opt = caseRepository.findById(idCase);
-		Case testCase = opt.get();
+		Optional<TestCase> opt = caseRepository.findById(idCase);
+		TestCase testCase = opt.get();
 		
 		TestExecution execution = TestExecutionForm.extract(data);
 		execution.setTestCase(testCase);

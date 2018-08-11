@@ -4,6 +4,7 @@ import java.util.List;
 
 import ma.map.tm.entities.Project;
 import ma.map.tm.entities.dto.ProjectDTO;
+import ma.map.tm.entities.dto.ProjectReportDTO;
 import ma.map.tm.web.forms.ProjectForm;
 
 public interface IProjectService {
@@ -18,5 +19,5 @@ public interface IProjectService {
 
 	ProjectDTO updateProject(Long id, ProjectForm data);
 
-	Project generateReport(Long idProject);
+	ProjectReportDTO generateReport(Long idProject);
 }

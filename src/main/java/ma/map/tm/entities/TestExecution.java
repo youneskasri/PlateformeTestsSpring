@@ -2,6 +2,7 @@ package ma.map.tm.entities;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,12 +24,15 @@ public class TestExecution {
 	
 	private Date dateOfExecution;
 	private Boolean status; // OK or NOT OK
+	
+	@Column(columnDefinition="TEXT")
 	private String remarks;
+	
 	private String outputs;
 	
 	@JsonIgnore
 	@ManyToOne
-	private Case testCase;
+	private TestCase testCase;
 
 	public void setData(TestExecutionForm data) {
 		setDateOfExecution(data.getDateOfExecution());

@@ -113,12 +113,12 @@ class ShowCase extends React.Component {
 
 	componentDidMount() {
 		let { idProject, idPlan, idScenario, idCase } = this.props.match.params;
-		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}`)
+		Axios.get(`${BASE_URL}/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}`)
 			.then(res => res.data)
 			.then(testCase => this.setState({ testCase }));
 
 
-		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}/executions`)
+		Axios.get(`${BASE_URL}/projects/${idProject}/plans/${idPlan}/scenarios/${idScenario}/cases/${idCase}/executions`)
 			.then(res => res.data)
 			.then(executions => this.setState({ executions }))
 			.then(() => console.log(this.state.executions))

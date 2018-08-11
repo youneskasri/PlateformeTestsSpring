@@ -8,9 +8,10 @@ import Axios from "axios";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
+const BASE_URL = require("../params").serverBaseUrl;
 
 function deletePlanById(idProject, idPlan) {
-	return  Axios.delete(`http://localhost:8080/projects/${idProject}/plans/${idPlan}`)
+	return  Axios.delete(`${BASE_URL}/projects/${idProject}/plans/${idPlan}`)
 		.then(response => response.data);
 }
 
@@ -62,11 +63,11 @@ class ShowPlan extends React.Component {
 
 	componentDidMount() {
 		let { idProject, idPlan, idScenario } = this.props.match.params;
-		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/`)
+		Axios.get(`${BASE_URL}/projects/${idProject}/plans/${idPlan}/`)
 			.then(res => res.data)
 			.then(plan => this.setState({ plan }));
 
-		Axios.get(`http://localhost:8080/projects/${idProject}/plans/${idPlan}/scenarios`)
+		Axios.get(`${BASE_URL}/projects/${idProject}/plans/${idPlan}/scenarios`)
 			.then(res => res.data)
 			.then(scenarios => { console.log(scenarios); return scenarios; })
 			.then(scenarios => this.setState({ scenarios }))

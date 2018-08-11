@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ma.map.tm.entities.Case;
+import ma.map.tm.entities.TestCase;
 
 @Data
 @NoArgsConstructor
@@ -20,9 +20,9 @@ public class CaseForm {
 	private String expectedOutputs;
 	private String steps;
 	
-	public static Case extract(CaseForm data) {
+	public static TestCase extract(CaseForm data) {
 
-		Case testCase = new Case();
+		TestCase testCase = new TestCase();
 		testCase.setData(data);
 		return testCase;
 	}

@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,11 +27,13 @@ import ma.map.tm.web.forms.ScenarioForm;
 public class Scenario {
 
 	private @Id @GeneratedValue Long idScenario;
-	private String title;
+	private @NotBlank String title;
+	
+	@Column(columnDefinition="TEXT")
 	private String description;
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="scenario")
-	private List<Case> testCases = new ArrayList<>();
+	private List<TestCase> testCases = new ArrayList<>();
 	
 	@JsonIgnore
 	@ManyToOne

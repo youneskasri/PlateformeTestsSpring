@@ -4,7 +4,7 @@ import java.util.Date;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ma.map.tm.entities.Case;
+import ma.map.tm.entities.TestCase;
 
 @Data
 @NoArgsConstructor
@@ -21,7 +21,7 @@ public class CaseDTO {
 	
 	private int numberOfExecutions;
 	
-	public static CaseDTO convert(Case c) {
+	public static CaseDTO convert(TestCase c) {
 		
 		CaseDTO dto = new CaseDTO();
 		
