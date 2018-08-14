@@ -4,23 +4,27 @@ import { Link, Redirect } from 'react-router-dom';
 export default class LoginForm extends Component {
 
 	state = {
-		redirect: ''
+		redirectToReferrer: false
 	}
+
 
 	onSubmit = (evt) => {
 		evt.preventDefault();
 		sessionStorage.setItem("token", "4fe-056-2cx");
 
-		let redirect = <Redirect to="/projects" />
-
-		this.setState({ redirect });
+		this.setState({ redirectToReferrer: true });
 	}
 
 	render() {
-		let { redirect } = this.state;
+
+		const { from } = this.props.location.state || { from: { pathname: '/' } }
+	    const { redirectToReferrer } = this.state
+
+	    if (redirectToReferrer === true) {
+	      return <Redirect to={from} />
+	    }
 		return (
 			<div className="container mt-5">
-				{ redirect}
 				<div className="row">
 					<div className="col-6 offset-3 mt-5">
 						<div className="card">

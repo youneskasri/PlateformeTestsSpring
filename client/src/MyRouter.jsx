@@ -1,7 +1,7 @@
 import React from 'react';
 import {
 	BrowserRouter as Router,
-	Route, Switch
+	Route, Switch, Redirect
 } from "react-router-dom";
 
 import MyNavbar from "./components/MyNavbar";
@@ -32,6 +32,17 @@ import LoginForm from "./pages/LoginForm";
 import ProjectReport from "./pages/ProjectReport";
 
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    sessionStorage.getItem("token") !== null
+      ? <Component {...props} />
+      : <Redirect to={{
+          pathname: '/login',
+          state: { from: props.location }
+        }} />
+  )} />
+)
+
 const MyRouter = (props) => {
 
 	let routes = {
@@ -50,30 +61,30 @@ const MyRouter = (props) => {
 
 				{/* Routage */}
 				<Switch>
-					<Route exact path={routes['Users']} component={Users} />
-					<Route exact path={routes['Projects']} component={Projects} />
-					<Route path={routes['Discussion']} component={() => ( <h1>Discussion</h1>)} />
-
 					<Route exact path='/login' component={LoginForm} />
-					<Route exact path='/users/new' component={NewUser} />
-					<Route exact path='/users/:idUser(\d+)/edit' component={EditUser} />
-
 					<Route exact path='/' component={Home} />
-					<Route exact path='/projects/new' component={NewProject} />
 
-					<Route exact path="/projects/:idProject(\d+)/report" component={ProjectReport} />
+					<PrivateRoute exact path={routes['Users']} component={Users} />
+					<PrivateRoute exact path={routes['Projects']} component={Projects} />
+					<PrivateRoute path={routes['Discussion']} component={() => ( <h1>Discussion</h1>)} />
+
+					
+					<PrivateRoute exact path='/users/new' component={NewUser} />
+					<PrivateRoute exact path='/users/:idUser(\d+)/edit' component={EditUser} />
+
+					<PrivateRoute exact path='/projects/new' component={NewProject} />
+					<PrivateRoute exact path="/projects/:idProject(\d+)/report" component={ProjectReport} />
 					
 					{/* Be careful, These Are Using Nested Routes */}
-					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios/:idScenario/cases/:idCase(\d+)/edit' component={EditCase} />	
-					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios/:idScenario/cases/:idCase(\d+)' component={ShowCase} />	
-					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios/:idScenario/cases/new' component={NewCase} />	
-					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios/:idScenario/edit' component={EditScenario} />	
-					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios/:idScenario/cases' component={ShowScenario} />	
-					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/edit' component={EditPlan} />	
-					<Route path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios' component={ShowPlan} />
-					<Route path='/projects/:idProject(\d+)/edit' component={EditProject} />
-					<Route path='/projects/:idProject(\d+)' component={ShowProject} />
-
+					<PrivateRoute path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios/:idScenario/cases/:idCase(\d+)/edit' component={EditCase} />	
+					<PrivateRoute path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios/:idScenario/cases/:idCase(\d+)' component={ShowCase} />	
+					<PrivateRoute path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios/:idScenario/cases/new' component={NewCase} />	
+					<PrivateRoute path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios/:idScenario/edit' component={EditScenario} />	
+					<PrivateRoute path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios/:idScenario/cases' component={ShowScenario} />	
+					<PrivateRoute path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/edit' component={EditPlan} />	
+					<PrivateRoute path='/projects/:idProject(\d+)/plans/:idPlan(\d+)/scenarios' component={ShowPlan} />
+					<PrivateRoute path='/projects/:idProject(\d+)/edit' component={EditProject} />
+					<PrivateRoute path='/projects/:idProject(\d+)' component={ShowProject} />
 					
 				</Switch>
 			</div>

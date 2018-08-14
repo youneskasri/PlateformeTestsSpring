@@ -8,7 +8,25 @@ import {
   NavItem,
   NavLink } from 'reactstrap';
 
-import { Link } from   'react-router-dom';
+import { Link, withRouter } from   'react-router-dom';
+
+const AuthButton = withRouter(({ history }) => (
+  sessionStorage.getItem("token") !== null ? (
+    <div>
+      <span className="text-light">Welcome Younes ! </span> 
+      <button 
+        className="ml-2 btn btn-sm btn-light"
+        onClick={() => {
+          sessionStorage.clear("token");
+          history.push('/');
+        }}>
+        Sign out <i className="fas fa-sign-out-alt"></i>
+      </button>
+    </div>
+  ) : (
+    <div className="text-light">You are not logged in.</div>
+  )
+))
 
 
 const MyNavItem = (props) => {
@@ -66,11 +84,7 @@ export default class MyNavbar extends React.Component {
             	))
             }
           </Nav>
-          {
-            sessionStorage.getItem("token") ?
-              <button onClick={this.handleClickLogout} className="btn btn-sm btn-light">Sign out <i className="fas fa-sign-out-alt"></i></button>
-              :''
-          }          
+          <AuthButton />         
         </Collapse>
       </Navbar>
     );
