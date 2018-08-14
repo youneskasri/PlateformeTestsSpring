@@ -68,7 +68,7 @@ const ShowUser = (props) => {
 			<div className="card-footer bg-light">
 				<div className="text-center">
 					<button className="btn btn-warning btn-sm mx-1 "><i className="fas fa-user-slash"></i> Désactiver</button>
-					<Link to="/" className="btn btn-info btn-sm mx-1"><i className="fas fa-user-edit"></i> Edit</Link>					
+					<Link to={`/users/${user.idUser}/edit`} className="btn btn-info btn-sm mx-1"><i className="fas fa-user-edit"></i> Edit</Link>					
 					<button onClick={props.handleDelete} className="btn btn-sm btn-danger m-0 mx-1"><i className="far fa-trash-alt"></i> Delete</button>
 				</div>
 			</div>

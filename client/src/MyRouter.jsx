@@ -8,8 +8,8 @@ import MyNavbar from "./components/MyNavbar";
 
 import Home from "./pages/Home";
 import Users from "./pages/Users";
-//import NewUser from "./pages/NewUser";
-
+import NewUser from "./pages/NewUser";
+import EditUser from "./pages/EditUser";
 
 import Projects from "./pages/Projects";
 import ShowProject from "./pages/ShowProject";
@@ -42,8 +42,6 @@ const MyRouter = (props) => {
 
 	console.log("Rendering MyRouter");
 
-	const NewUser = (props) => (<h1 className="mt-5">HAAAAAALOLLO</h1>);
-
 	return (
 		<Router>
 			<div className="bg-light">
@@ -57,9 +55,10 @@ const MyRouter = (props) => {
 					<Route path={routes['Discussion']} component={() => ( <h1>Discussion</h1>)} />
 
 					<Route exact path='/login' component={LoginForm} />
-					<Route exact path="'/users/new" component={NewUser} />
+					<Route exact path='/users/new' component={NewUser} />
+					<Route exact path='/users/:idUser(\d+)/edit' component={EditUser} />
 
-					<Route exact path="/" component={Home} />
+					<Route exact path='/' component={Home} />
 					<Route exact path='/projects/new' component={NewProject} />
 
 					<Route exact path="/projects/:idProject(\d+)/report" component={ProjectReport} />

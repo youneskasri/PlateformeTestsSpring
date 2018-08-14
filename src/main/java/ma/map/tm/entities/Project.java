@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ma.map.tm.entities.users.User;
 import ma.map.tm.web.forms.ProjectForm;
 
 @Entity
@@ -40,7 +41,7 @@ public class Project {
 	
 	@JsonIgnore
 	@ManyToOne
-	private Tester author;
+	private User author;
 	
 	public Project(String title, String description, Date startDate, Date endDate) {
 		setTitle(title);
