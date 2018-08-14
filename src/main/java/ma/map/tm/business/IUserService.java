@@ -13,8 +13,9 @@ public interface IUserService {
 	
 	/* TODO Should I update the email ?? */
 	User updateUser(Long idUser, UserForm form);
-	Boolean deleteUser(Long idUser);
+	Boolean removeUserById(Long idUser);
 	
 	User disableAccount(Long idUser);
 	User enableAccount(Long idUser);
+
 }

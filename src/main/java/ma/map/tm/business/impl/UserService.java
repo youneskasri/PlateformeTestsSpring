@@ -30,7 +30,7 @@ public class UserService implements IUserService {
 	@Override
 	public User createUser(UserForm form) {
 		User user = User.makeUser(form);
-		return user;
+		return userRepository.save(user);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public Boolean deleteUser(Long idUser) {
+	public Boolean removeUserById(Long idUser) {
 		if (userRepository.existsById(idUser)) {
 			userRepository.deleteById(idUser);
 			return true;

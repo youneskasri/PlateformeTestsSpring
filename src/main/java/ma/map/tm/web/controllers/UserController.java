@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +40,7 @@ public class UserController {
 		return userService.retrieveUserById(idUser);
 	}
 	
-	@PostMapping("/{idUser}")
+	@PatchMapping("/{idUser}")
 	public User update(@PathVariable Long idUser, @RequestBody UserForm form) {
 		return userService.updateUser(idUser, form);
 	}
@@ -55,9 +56,9 @@ public class UserController {
 	}
 	
 	
-	@DeleteMapping
-	public Boolean delete(Long idUser) {
-		return userService.deleteUser(idUser);
+	@DeleteMapping("/{idUser}")
+	public Boolean delete(@PathVariable Long idUser) {
+		return userService.removeUserById(idUser);
 	}
 	
 }

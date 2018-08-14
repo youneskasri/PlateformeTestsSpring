@@ -1,5 +1,6 @@
 package ma.map.tm.entities.users;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -37,9 +38,9 @@ public class User {
 	private Boolean active = true;
 	private UserRole role;
 	
-
+	@JsonIgnore
 	@ManyToMany
-	private List<Project> assignedProjects;
+	private List<Project> assignedProjects = new ArrayList<>();
 	
 	public static User makeUser(UserForm form) {
 		UserRole role = UserRole.valueOf(form.getRole());
@@ -71,6 +72,6 @@ public class User {
 		
 		throw new RuntimeException("Invalid Data Type");
 	}
-
+  
 }
 
