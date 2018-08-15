@@ -3,6 +3,7 @@ package ma.map.tm.entities.users;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -31,7 +32,9 @@ public class User {
 	private @NotBlank String firstName;
 	private @NotBlank String lastName;
 	
+	@Column(unique=true)
 	private @NotBlank String email;
+	
 	@JsonIgnore 
 	private @NotBlank String password;
 	

@@ -28,7 +28,10 @@ export default class EditScenario  extends React.Component {
 		.then(scenario => {
 			this.setState({ scenario });
 		})
-		.catch(console.log);
+		.catch(err => {
+			console.log(err);
+			alert(err.message);
+		});
 	}
 
 

@@ -6,15 +6,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import ma.map.tm.business.ICaseService;
 import ma.map.tm.dao.CaseRepository;
 import ma.map.tm.dao.ScenarioRepository;
-import ma.map.tm.entities.TestCase;
 import ma.map.tm.entities.Scenario;
+import ma.map.tm.entities.TestCase;
 import ma.map.tm.entities.dto.CaseDTO;
 import ma.map.tm.web.forms.CaseForm;
 

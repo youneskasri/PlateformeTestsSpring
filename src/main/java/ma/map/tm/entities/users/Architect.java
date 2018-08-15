@@ -1,14 +1,10 @@
 package ma.map.tm.entities.users;
 
-import java.util.List;
-
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ma.map.tm.entities.Project;
 
 @Entity
 @Getter @Setter

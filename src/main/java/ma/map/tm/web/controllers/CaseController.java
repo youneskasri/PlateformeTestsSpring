@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ma.map.tm.business.ICaseService;
 import ma.map.tm.entities.dto.CaseDTO;
-import ma.map.tm.entities.dto.ScenarioDTO;
 import ma.map.tm.web.forms.CaseForm;
 
 @RestController

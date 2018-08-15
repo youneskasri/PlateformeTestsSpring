@@ -13,7 +13,6 @@ import ma.map.tm.dao.PlanRepository;
 import ma.map.tm.dao.ScenarioRepository;
 import ma.map.tm.entities.Plan;
 import ma.map.tm.entities.Scenario;
-import ma.map.tm.entities.dto.PlanDTO;
 import ma.map.tm.entities.dto.ScenarioDTO;
 import ma.map.tm.web.forms.ScenarioForm;
 

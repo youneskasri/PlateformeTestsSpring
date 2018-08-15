@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
+import AuthService from "../actions/auth";
+
 export default class LoginForm extends Component {
 
 	state = {
@@ -10,9 +12,18 @@ export default class LoginForm extends Component {
 
 	onSubmit = (evt) => {
 		evt.preventDefault();
-		sessionStorage.setItem("token", "4fe-056-2cx");
 
-		this.setState({ redirectToReferrer: true });
+		let email = this.refs.email.value;
+		let password = this.refs.password.value;
+
+		AuthService.login({ email, password })
+		.then(token => {
+			sessionStorage.setItem("token", token);
+			this.setState({ redirectToReferrer: true });
+		}).catch(err => {
+			console.log(err);
+			alert(err.message);
+		});
 	}
 
 	render() {
@@ -35,11 +46,11 @@ export default class LoginForm extends Component {
 								<form action="" onSubmit={this.onSubmit}>
 									<div className="form-group">
 										<label>Username</label>
-										<input type="text" placeholder="username" className="form-control"/>
+										<input type="email" ref="email" placeholder="email" className="form-control" required/>
 									</div>
 									<div className="form-group">
 										<label>Password</label>
-										<input type="password" placeholder="password" className="form-control"/>								
+										<input type="password"  ref="password" placeholder="password" className="form-control" required/>								
 									</div>
 									<hr/>
 									<button className="btn btn-block btn-info">Login</button>

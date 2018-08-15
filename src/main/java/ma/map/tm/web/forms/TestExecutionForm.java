@@ -2,7 +2,6 @@ package ma.map.tm.web.forms;
 
 import java.util.Date;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ma.map.tm.entities.TestExecution;

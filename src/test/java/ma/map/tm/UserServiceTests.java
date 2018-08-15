@@ -107,7 +107,7 @@ public class UserServiceTests {
 		User user = userRepository.save(new Tester("a", "b", "c", "d"));
 		Long idUser = user.getIdUser();
 		
-		userService.deleteUser(idUser);
+		userService.removeUserById(idUser);
 		
 		assertThat(userRepository.existsById(idUser)).isEqualTo(false);
 	}

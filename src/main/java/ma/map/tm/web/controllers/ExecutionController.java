@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ma.map.tm.business.IExecutionService;
-import ma.map.tm.entities.dto.CaseDTO;
 import ma.map.tm.entities.dto.TestExecutionDTO;
 import ma.map.tm.web.forms.TestExecutionForm;
 

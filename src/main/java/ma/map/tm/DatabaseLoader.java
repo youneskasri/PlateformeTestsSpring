@@ -3,7 +3,6 @@ package ma.map.tm;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -11,11 +10,13 @@ import ma.map.tm.dao.CaseRepository;
 import ma.map.tm.dao.PlanRepository;
 import ma.map.tm.dao.ProjectRepository;
 import ma.map.tm.dao.ScenarioRepository;
-import ma.map.tm.entities.TestCase;
+import ma.map.tm.dao.UserRepository;
 import ma.map.tm.entities.Plan;
 import ma.map.tm.entities.Project;
 import ma.map.tm.entities.Scenario;
+import ma.map.tm.entities.TestCase;
 import ma.map.tm.entities.TestType;
+import ma.map.tm.entities.users.User;
 
 //@Component
 public class DatabaseLoader implements CommandLineRunner {
@@ -28,6 +29,8 @@ public class DatabaseLoader implements CommandLineRunner {
 	private ScenarioRepository scenarioRepository;
 	@Autowired
 	private CaseRepository caseRepository;
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Autowired
 	public DatabaseLoader(ProjectRepository repository) {
@@ -67,5 +70,10 @@ public class DatabaseLoader implements CommandLineRunner {
 		testCase.setSteps("<h4>Holà</h4>");
 		
 		testCase = caseRepository.save(testCase);
+		
+		
+		userRepository.save(new User("younes", "kasri", "youneskasri@gmail.com", "mdp"));
+		userRepository.save(new User("tounes", "basri", "tounes@gmail.com", "mdp"));
+		userRepository.save(new User("lounes", "3asri", "lounes@gmail.com", "mdp"));
 	}
 }
