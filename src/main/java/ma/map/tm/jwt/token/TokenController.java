@@ -18,7 +18,7 @@ import ma.map.tm.web.forms.LoginForm;
 
 @RestController
 @RequestMapping("/token")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class TokenController {
 
 	private UserRepository userRepository;
