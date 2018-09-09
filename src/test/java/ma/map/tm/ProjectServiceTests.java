@@ -47,7 +47,7 @@ public class ProjectServiceTests {
 				description = "Lorem ipsum description";
 		
 		ProjectDTO result = projectService.createProject(
-				new ProjectForm(title, description, new Date(), null));
+				new ProjectForm(title, description, new Date(), new Date()));
 		
 		assertThat(result.getTitle()).isEqualTo(title);
 		assertThat(result.getDescription()).isEqualTo(description);
@@ -55,7 +55,7 @@ public class ProjectServiceTests {
 	
 	@Test
 	public void retrieveProjectById() {
-		Project p = projectRepository.save(new Project("", "Desc", null, null));
+		Project p = projectRepository.save(new Project("tre", "Desc", new Date(), new Date()));
 		ProjectDTO result = projectService.retrieveProjectById(p.getIdProject());
 		assertThat(result.getIdProject()).isEqualTo(p.getIdProject());
 		assertThat(result.getDescription()).isNotEmpty();
@@ -70,7 +70,8 @@ public class ProjectServiceTests {
 	
 	@Test
 	public void removeProjectById() {
-		Project p = projectRepository.save(new Project());
+		Project p = projectRepository
+				.save(new Project("Ti", "DEsc", new Date(), new Date()));
 		
 		assertThat(p.getIdProject()).isNotNull();
 		
@@ -82,7 +83,7 @@ public class ProjectServiceTests {
 	
 	@Test
 	public void updateProject() {
-		Long id = projectService.createProject(new ProjectForm("T1", "D1", null, null)).getIdProject();
+		Long id = projectService.createProject(new ProjectForm("T1", "D1", new Date(), new Date())).getIdProject();
 		ProjectDTO dto = projectService.updateProject(id, new ProjectForm("New Title", "New Description", new Date(), null));
 		assertThat(dto.getIdProject()).isEqualTo(id);
 		assertThat(dto.getDescription()).isEqualTo("New Description");

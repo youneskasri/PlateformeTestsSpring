@@ -17,12 +17,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import ma.map.tm.entities.Project;
 import ma.map.tm.web.forms.UserForm;
 
 @Entity
 @Getter @Setter
 @NoArgsConstructor
+@ToString
 @Inheritance(
     strategy = InheritanceType.JOINED
 )
@@ -40,7 +42,7 @@ public class User {
 	
 	private Boolean active = true;
 	private UserRole role;
-	
+
 	@JsonIgnore
 	@ManyToMany
 	private List<Project> assignedProjects = new ArrayList<>();

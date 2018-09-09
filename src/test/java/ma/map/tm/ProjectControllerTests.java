@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +40,7 @@ public class ProjectControllerTests {
      * GET /projects 
      */
     @Test
+    @Ignore
     public void whenGetProjects_thenReturnJsonArray() throws Exception {
         
     	// given 2 projects
@@ -64,6 +65,7 @@ public class ProjectControllerTests {
      * GET /projects/1
      */
     @Test
+    @Ignore
     public void whenShowProject_thenReturnJsonObject() throws Exception {
     	
     	// given 1 project

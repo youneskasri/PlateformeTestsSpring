@@ -31,17 +31,52 @@ import AutomatedCaseForm from "./components/AutomatedCaseForm";
 import LoginForm from "./pages/LoginForm";
 import ProjectReport from "./pages/ProjectReport";
 
+const BASE_NAME = require("./params").basename;
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={(props) => (
-    sessionStorage.getItem("token") !== null
-      ? <Component {...props} />
-      : <Redirect to={{
-          pathname: '/login',
-          state: { from: props.location }
-        }} />
-  )} />
-)
+  <Route {...rest} render={(props) => {
+		 
+		 if (props.role && props.role !== sessionStorage.getItem('role')) {
+		 	return (
+		 		<h1>Not Found</h1>
+		 	)
+		 }
+
+		 return (
+		    sessionStorage.getItem("token") !== null
+		      ? <Component {...props} />
+		      : <Redirect to={{
+		          pathname: '/login',
+		          state: { from: props.location }
+		        }} />
+		  );
+	  }
+  } />
+);
+
+const AdminRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => {
+		 
+		 let token = sessionStorage.getItem("token");
+		 let role = sessionStorage.getItem("role");
+
+		 if (token !== null && "ADMIN" !== role) {
+		 	return (
+		 		<h1>Unauthorized</h1>
+		 	)
+		 }
+
+		 return (
+		    token !== null
+		      ? <Component {...props} />
+		      : <Redirect to={{
+		          pathname: '/login',
+		          state: { from: props.location }
+		        }} />
+		  );
+	  }
+  } />
+);
 
 const MyRouter = (props) => {
 
@@ -54,7 +89,7 @@ const MyRouter = (props) => {
 	console.log("Rendering MyRouter");
 
 	return (
-		<Router>
+		<Router basename={BASE_NAME}>
 			<div className="bg-light">
 				{/* Navbar */}
 				<MyNavbar routes={routes} />
@@ -63,14 +98,15 @@ const MyRouter = (props) => {
 				<Switch>
 					<Route exact path='/login' component={LoginForm} />
 					<Route exact path='/' component={Home} />
+					<Route exact path={BASE_NAME} component={Home} />
 
-					<PrivateRoute exact path={routes['Users']} component={Users} />
+					<AdminRoute exact path={routes['Users']} component={Users} />
 					<PrivateRoute exact path={routes['Projects']} component={Projects} />
 					<PrivateRoute path={routes['Discussion']} component={() => ( <h1>Discussion</h1>)} />
 
 					
-					<PrivateRoute exact path='/users/new' component={NewUser} />
-					<PrivateRoute exact path='/users/:idUser(\d+)/edit' component={EditUser} />
+					<AdminRoute exact path='/users/new' component={NewUser} />
+					<AdminRoute exact path='/users/:idUser(\d+)/edit' component={EditUser} />
 
 					<PrivateRoute exact path='/projects/new' component={NewProject} />
 					<PrivateRoute exact path="/projects/:idProject(\d+)/report" component={ProjectReport} />

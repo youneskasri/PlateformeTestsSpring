@@ -17,7 +17,7 @@ import ma.map.tm.entities.dto.ScenarioDTO;
 import ma.map.tm.web.forms.ScenarioForm;
 
 @RestController
-@RequestMapping("/projects/{idProject}/plans/{idPlan}/scenarios")
+@RequestMapping("/api/projects/{idProject}/plans/{idPlan}/scenarios")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ScenarioController {
 

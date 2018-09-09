@@ -17,7 +17,7 @@ import ma.map.tm.entities.dto.CaseDTO;
 import ma.map.tm.web.forms.CaseForm;
 
 @RestController
-@RequestMapping("/projects/{idProject}/plans/{idPlan}/scenarios/{idScenario}/cases")
+@RequestMapping("/api/projects/{idProject}/plans/{idPlan}/scenarios/{idScenario}/cases")
 @CrossOrigin(origins = "http://localhost:3000")
 public class CaseController {
 

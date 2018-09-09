@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import Axios from 'axios';
+import Axios from '../actions/axios';
 
 import DatePicker from 'react-datepicker';
 import moment from 'moment';

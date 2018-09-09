@@ -9,7 +9,7 @@ class ProjectList extends React.Component {
   }
 
   render(){
-
+    
     let projects = this.props.projects.map((project, i) => (
       <Project  key={i} project={project} showLink />
     ));

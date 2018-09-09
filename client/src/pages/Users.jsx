@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Axios from "axios";
+import Axios from "../actions/axios";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
@@ -14,17 +14,22 @@ export default class Users extends React.Component {
 	state = {
 		users: [
 			{	
-				idUser: "001",
-				firstName: "lolo",
-				lastName: "lil",
-				email: "lil@wayne.cpm",
-				role: "ADMINo"
+				idUser: "",
+				firstName: "",
+				lastName: "",
+				email: "",
+				role: ""
 			}
 		],
 		selectedUser: null
 	}
 
 	componentWillMount() {
+
+		console.log(sessionStorage.getItem('token'));
+		console.log(sessionStorage.getItem('role'));
+		console.log(sessionStorage.getItem('firstName'));
+
 		Axios.get(`${BASE_URL}/users`)
 		.then(res => res.data)
 		.then(users => {

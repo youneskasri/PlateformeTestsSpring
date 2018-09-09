@@ -1,5 +1,5 @@
 import React from 'react';
-import Axios from 'axios';
+import Axios from '../actions/axios';
 import { Link, Switch, Route, Redirect, BrowserRouter as Router } from "react-router-dom";
 import Project from "../components/Project";
 import Plan from "../components/Plan";

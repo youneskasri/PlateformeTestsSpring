@@ -31,28 +31,28 @@ public class ApplicationTests {
 	@Test
 	public void createManager() {
 		String firstName = "Younes", lastName = "Kasri", 
-				email="youneskasri@gmail.com", password="password";
+				email="youneskasri@gmail.com0", password="password";
 		testSaveUser(firstName, lastName, email, password, UserRole.MANAGER, Manager.class);	
 	}
 	
 	@Test
 	public void createTester() {
 		String firstName = "Younes", lastName = "Kasri", 
-				email="youneskasri@gmail.com", password="password";
+				email="youneskasri@gmail.com1", password="password";
 		testSaveUser(firstName, lastName, email, password, UserRole.TESTER, Tester.class);	
 	}
 	
 	@Test
 	public void createAdmin() {
 		String firstName = "Younes", lastName = "Kasri", 
-				email="youneskasri@gmail.com", password="password";
+				email="youneskasri@gmail.com2", password="password";
 		testSaveUser(firstName, lastName, email, password, UserRole.ADMIN, Admin.class);
 	}
 	
 	@Test
 	public void createArchitect() {
 		String firstName = "Younes", lastName = "Kasri", 
-				email="youneskasri@gmail.com", password="password";
+				email="youneskasri@gmail.com4", password="password";
 		testSaveUser(firstName, lastName, email, password, UserRole.ARCHITECT, Architect.class);	
 	}
 	

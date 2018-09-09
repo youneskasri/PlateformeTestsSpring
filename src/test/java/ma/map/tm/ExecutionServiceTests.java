@@ -1,8 +1,8 @@
 package ma.map.tm;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -19,6 +19,7 @@ import ma.map.tm.dao.ExecutionRepository;
 import ma.map.tm.entities.TestCase;
 import ma.map.tm.entities.TestExecution;
 import ma.map.tm.entities.dto.TestExecutionDTO;
+import ma.map.tm.web.forms.CaseForm;
 import ma.map.tm.web.forms.TestExecutionForm;
 
 
@@ -49,7 +50,7 @@ public class ExecutionServiceTests {
 		@Test
 		public void createExecution() {
 		
-			TestCase testCase = caseRepository.save(new TestCase());
+			TestCase testCase = createExampleTestCase();
 		
 			
 			String outputs="output", remarks="No remarks";
@@ -68,11 +69,12 @@ public class ExecutionServiceTests {
 			assertThat(result.getStatus()).isEqualTo(status);
 			assertThat(result.getRemarks()).isEqualTo(remarks);
 		}
+
 		
 		@Test
 		public void retrieveExecutionById() {
 
-			TestCase testCase = caseRepository.save(new TestCase());
+			TestCase testCase = createExampleTestCase();
 			
 			String outputs="output", remarks="No remarks";
 			Boolean status = true;
@@ -99,7 +101,7 @@ public class ExecutionServiceTests {
 		public void retrieveAllExecution() {
 			
 			
-			TestCase testCase = caseRepository.save(new TestCase());
+			TestCase testCase = createExampleTestCase();
 			
 			String outputs="output", remarks="No remarks";
 			Boolean status = true;
@@ -138,6 +140,14 @@ public class ExecutionServiceTests {
 		
 		public void updateCase() {
 
+		}
+		
+
+		private TestCase createExampleTestCase() {
+			TestCase testCase = new TestCase();
+			testCase.setData(new CaseForm("Obj", new Date(), false, "olo", "lili", "cq"));
+			testCase = caseRepository.save(testCase);
+			return testCase;
 		}
 		
 }

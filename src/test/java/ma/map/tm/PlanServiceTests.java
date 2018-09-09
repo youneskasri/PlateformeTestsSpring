@@ -2,6 +2,7 @@ package ma.map.tm;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -46,7 +47,7 @@ public class PlanServiceTests {
 	
 	@Test
 	public void createPlan() {
-		Project pr = projectRepository.save(new Project());
+		Project pr = createExampleProject();
 		Plan plan = new Plan("Plan Title", "Desc");
 		
 		PlanDTO planDTO = planService.createPlan(pr.getIdProject(), new PlanForm(plan));
@@ -56,10 +57,8 @@ public class PlanServiceTests {
 	
 	@Test
 	public void retrievePlanById() {
-		Project pr = projectRepository.save(new Project());
-		Plan plan = new Plan("Plan Title", "Desc");
-		plan.setProject(pr);
-		planRepository.save(plan);
+		Project pr = createExampleProject();
+		Plan plan = createExamplePlan(pr);
 		
 		PlanDTO result = planService.retrievePlanById(plan.getIdPlan());
 	
@@ -69,27 +68,35 @@ public class PlanServiceTests {
 	
 	@Test 
 	public void retrieveAllPlans() {
-		Project pr = projectRepository.save(new Project());
-		Plan plan = new Plan("Plan Title", "Desc");
-		plan.setProject(pr);
-		planRepository.save(plan);
+		Project pr = createExampleProject();
+		createExamplePlan(pr);
 		
 		List<PlanDTO> plans = planService.retrieveAllPlans(pr.getIdProject());
 		assertThat(plans).isNotNull();
 		assertThat(plans.size()).isGreaterThanOrEqualTo(1);
 	}
+
+
 	
 	@Test
 	public void removePlanById() {
-		Project pr = projectRepository.save(new Project());
-		Plan plan = new Plan("Plan Title", "Desc");
-		plan.setProject(pr);
-		planRepository.save(plan);
+		Project pr = createExampleProject();
+		Plan plan = createExamplePlan(pr);
 		
 		assertThat(planService.removePlanById(plan.getIdPlan())).isEqualTo(true);
 		assertThat(planRepository.existsById(plan.getIdPlan())).isEqualTo(false);
 	}
+
+	private Project createExampleProject() {
+		Project pr = projectRepository.save(new Project("Title", "desc", new Date(), new Date()));
+		return pr;
+	}
 	
+	private Plan createExamplePlan(Project pr) {
+		Plan plan = new Plan("Plan Title", "Desc");
+		plan.setProject(pr);
+		return planRepository.save(plan);
+	}
 	
 	public void updatePlan() {
 		// TODO

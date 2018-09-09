@@ -3,7 +3,7 @@ import { Link, Switch, Route, Redirect, BrowserRouter as Router } from "react-ro
 import Plan from "../components/Plan";
 import Scenario from "../components/Scenario";
 import NewScenario from "../components/NewScenario";
-import Axios from "axios";
+import Axios from "../actions/axios";
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css

@@ -17,6 +17,7 @@ import ma.map.tm.entities.Scenario;
 import ma.map.tm.entities.TestCase;
 import ma.map.tm.entities.TestType;
 import ma.map.tm.entities.users.User;
+import ma.map.tm.entities.users.UserRole;
 
 //@Component
 public class DatabaseLoader implements CommandLineRunner {
@@ -72,8 +73,10 @@ public class DatabaseLoader implements CommandLineRunner {
 		testCase = caseRepository.save(testCase);
 		
 		
-		userRepository.save(new User("younes", "kasri", "youneskasri@gmail.com", "mdp"));
-		userRepository.save(new User("tounes", "basri", "tounes@gmail.com", "mdp"));
-		userRepository.save(new User("lounes", "3asri", "lounes@gmail.com", "mdp"));
+		userRepository.save(new User("younes", "kasri", "youneskasri@gmail.com", "mdp", UserRole.ADMIN));
+		userRepository.save(new User("tounes", "basri", "tounes@gmail.com", "mdp", UserRole.ARCHITECT));
+		userRepository.save(new User("lounes", "3asri", "lounes@gmail.com", "mdp", UserRole.TESTER));
+		
+		
 	}
 }

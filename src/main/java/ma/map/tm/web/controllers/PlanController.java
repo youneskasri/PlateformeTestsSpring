@@ -17,7 +17,7 @@ import ma.map.tm.entities.dto.PlanDTO;
 import ma.map.tm.web.forms.PlanForm;
 
 @RestController
-@RequestMapping("/projects/{idProject}/plans")
+@RequestMapping("/api/projects/{idProject}/plans")
 @CrossOrigin(origins = "http://localhost:3000")
 public class PlanController {
 	

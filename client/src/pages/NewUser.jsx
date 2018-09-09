@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import Axios from "axios";
+import Axios from "../actions/axios";
 
 const BASE_URL = require("../params").serverBaseUrl;
 

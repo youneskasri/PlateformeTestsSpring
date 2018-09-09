@@ -90,7 +90,9 @@ public class ScenarioServiceTests {
 	
 	@Test
 	public void removeProjectById() {
-		Scenario scenario = scenarioRepository.save(new Scenario());
+		Scenario scenario = new Scenario();
+		scenario.setData(new ScenarioForm("title", "description"));
+		scenario = scenarioRepository.save(scenario);
 		
 		assertThat(scenario.getIdScenario()).isNotNull();
 		

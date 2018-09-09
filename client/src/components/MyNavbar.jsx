@@ -9,15 +9,16 @@ import {
   NavLink } from 'reactstrap';
 
 import { Link, withRouter } from   'react-router-dom';
+import auth from "../actions/auth";
 
 const AuthButton = withRouter(({ history }) => (
-  sessionStorage.getItem("token") !== null ? (
+  auth.isLogged() ? (
     <div>
-      <span className="text-light">Welcome Younes ! </span> 
+      <span className="text-light">Welcome { sessionStorage.getItem("firstName") } ! </span> 
       <button 
         className="ml-2 btn btn-sm btn-light"
         onClick={() => {
-          sessionStorage.clear("token");
+          auth.logout();
           history.push('/');
         }}>
         Sign out <i className="fas fa-sign-out-alt"></i>
@@ -67,6 +68,13 @@ export default class MyNavbar extends React.Component {
 
     let linkNames = Object.keys(this.props.routes);
     let routes = this.props.routes;
+
+    if (auth.isAdmin() === false){
+      routes = {
+        Projects: '/projects',
+        Discussion: '/discussion'
+      };
+    }
    
     return (
       <Navbar color="info" dark expand="md">
