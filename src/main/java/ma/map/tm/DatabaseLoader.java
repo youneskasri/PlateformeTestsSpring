@@ -19,7 +19,7 @@ import ma.map.tm.entities.TestType;
 import ma.map.tm.entities.users.User;
 import ma.map.tm.entities.users.UserRole;
 
-//@Component
+@Component
 public class DatabaseLoader implements CommandLineRunner {
 
 	private final ProjectRepository repository;
