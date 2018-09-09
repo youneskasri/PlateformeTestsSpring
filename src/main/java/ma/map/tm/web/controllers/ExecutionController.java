@@ -19,7 +19,7 @@ import ma.map.tm.web.forms.TestExecutionForm;
 
 @RestController
 @RequestMapping("/api/projects/{idProject}/plans/{idPlan}/scenarios/{idScenario}/cases/{idCase}/executions")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class ExecutionController {
 
 		@Autowired

@@ -21,7 +21,7 @@ import ma.map.tm.web.forms.ProjectForm;
 
 @RestController
 @RequestMapping("/api/projects")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class ProjectController {
 
 	@Autowired

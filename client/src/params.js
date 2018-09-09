@@ -1,5 +1,5 @@
 
 module.exports = {
-	serverBaseUrl: 'http://localhost:8080/api',
+	serverBaseUrl: 'https://plateforme-tests.herokuapp.com/api',
 	basename: '/ReactPlateformeTests'
 }

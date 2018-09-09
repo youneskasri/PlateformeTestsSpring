@@ -18,7 +18,7 @@ import ma.map.tm.web.forms.ScenarioForm;
 
 @RestController
 @RequestMapping("/api/projects/{idProject}/plans/{idPlan}/scenarios")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class ScenarioController {
 
 	@Autowired

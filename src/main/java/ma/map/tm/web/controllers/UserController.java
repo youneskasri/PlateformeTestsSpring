@@ -22,7 +22,7 @@ import ma.map.tm.web.forms.UserForm;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class UserController {
 
 	@Autowired

@@ -18,7 +18,7 @@ import ma.map.tm.web.forms.CaseForm;
 
 @RestController
 @RequestMapping("/api/projects/{idProject}/plans/{idPlan}/scenarios/{idScenario}/cases")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class CaseController {
 
 	@Autowired
